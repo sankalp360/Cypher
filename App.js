@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import firebase from "firebase";
-import fireapi from "./app/config/firebase";
+import { firebaseConfig } from "./app/config/firebase";
+
+firebase.initializeApp(firebaseConfig);
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
