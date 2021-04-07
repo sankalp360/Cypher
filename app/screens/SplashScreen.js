@@ -15,6 +15,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import * as Animatable from "react-native-animatable";
 
 const SplashScreen = ({ navigation }) => {
+  const navigateToLogin = () => {
+    navigation.navigate("Login");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -30,22 +34,12 @@ const SplashScreen = ({ navigation }) => {
         <Text style={styles.title}>Cypher In Your Hands</Text>
         <Text style={styles.text}>Sign In With Account</Text>
         <View style={styles.button}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
-            style={styles.button}
-          >
+          <TouchableOpacity onPress={navigateToLogin}>
             <LinearGradient
               colors={["#08d4c4", "#01ab9d"]}
-              style={styles.SignIn}
+              style={styles.signIn}
             >
-              <Text style={styles.textSign}>Sign In</Text>
-              <MaterialCommunityIcons
-                name="chevron-right"
-                color="#fff"
-                size={20}
-              />
+              <Text style={styles.textSign}>Login</Text>
             </LinearGradient>
           </TouchableOpacity>
         </View>

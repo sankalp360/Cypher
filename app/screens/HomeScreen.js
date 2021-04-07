@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+
 import DashboardScreen from "./DashboardScreen";
 import PortfolioScreen from "./PortfolioScreen";
 import MarketScreen from "./MarketScreen";
 import ProfileScreen from "./ProfileScreen";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createMaterialBottomTabNavigator();
 
