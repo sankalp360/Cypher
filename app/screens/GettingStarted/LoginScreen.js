@@ -16,6 +16,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable";
 
+import fireapp from "../../config/firebase";
+
 const LoginScreen = ({ navigation }) => {
   const [data, setData] = React.useState({
     email: "",
@@ -52,6 +54,16 @@ const LoginScreen = ({ navigation }) => {
       ...data,
       secureTextEntry: !data.secureTextEntry,
     });
+  };
+
+  const handleLogin = () => {
+    let email = data.email;
+    let password = data.password;
+    fireapp
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => navigation.navigate("Dashboard"))
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -97,9 +109,11 @@ const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.button}>
+          <TouchableOpacity style={styles.signIn} onPress={() => handleLogin()}>
           <LinearGradient colors={["#08d4c4", "#01ab9d"]} style={styles.signIn}>
             <Text style={styles.textSign}>Login</Text>
           </LinearGradient>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate("Signup")}
             style={[

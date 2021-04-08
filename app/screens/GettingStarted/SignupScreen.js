@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,8 +16,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable";
 
+import fireapp from "../../config/firebase";
+
 const SignupScreen = ({ navigation }) => {
-  const [data, setData] = React.useState({
+  const [data, setData] = useState({
     email: "",
     password: "",
     confirm_password: "",
@@ -41,14 +43,6 @@ const SignupScreen = ({ navigation }) => {
       });
     }
   };
-
-  // const handleSignup = () =>{
-  //   firebase
-  //     .auth()
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then(() => navigation.navigate('Home'))
-  //     .catch(error => console.log(error.message))
-  // }
 
   const handlePasswordChange = (val) => {
     setData({
@@ -76,6 +70,16 @@ const SignupScreen = ({ navigation }) => {
       ...data,
       confirm_secureTextEntry: !data.confirm_secureTextEntry,
     });
+  };
+
+  const handleSignup = () => {
+    let email = data.email;
+    let password = data.password;
+    fireapp
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => navigation.navigate("Dashboard"))
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -142,7 +146,7 @@ const SignupScreen = ({ navigation }) => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.signIn}
-            onPress={() => navigation.navigate("Dashboard")}
+            onPress={() => handleSignup()}
           >
             <LinearGradient
               colors={["#08d4c4", "#01ab9d"]}

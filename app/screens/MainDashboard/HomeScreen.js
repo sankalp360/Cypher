@@ -1,10 +1,25 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
+
+import * as firebase from "firebase/app";
+import "firebase/auth";
+
+import fireapp from "../../config/firebase";
 
 const HomeScreen = () => {
+  const getToken = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        user.getIdToken().then((data) => {
+          console.log(data);
+        });
+      }
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Button onPress={() => getToken()} title="Get Token" />
     </View>
   );
 };

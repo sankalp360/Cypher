@@ -2,7 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { fireapp } from "./app/config/firebase";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -10,25 +11,40 @@ import { createStackNavigator } from "@react-navigation/stack";
 import RootTabScreen from "./app/screens/RootTabScreen";
 import LoadingScreen from "./app/screens/LoadingScreen";
 
+import GettingStartedScreen from './app/screens/GettingStarted/GettingStartedScreen'
+import LoginScreen from './app/screens/GettingStarted/LoginScreen'
+
 import RootStackScreen from "./app/screens/RootStackScreen";
 
 import { AuthProvider } from "./app/contexts/AuthContext";
+import fireapp from "./app/config/firebase";
 
 function App() {
   const [loaded, setLoaded] = useState(true);
-  const [auth, setAuth] = useState(true);
+  const [user, setUser] = useState(true);
 
   const Stack = createStackNavigator();
 
+  let auth = firebase.auth();
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      setUser(true)
+    } else {
+      // No user is signed in.
+      setUser(false)
+    }
+  });
+
   return (
-    <AuthProvider>
-      <NavigationContainer>
+    <NavigationContainer>
+      {user ? (
+        <RootTabScreen />
+      ) : (
         <RootStackScreen />
-        {/* <Stack.Navigator initialRouteName="Cypher">
-        <Stack.Screen name="Cypher" component={RootTabScreen} />
-      </Stack.Navigator> */}
-      </NavigationContainer>
-    </AuthProvider>
+      )}
+    </NavigationContainer>
   );
 }
 
