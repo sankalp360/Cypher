@@ -21,7 +21,7 @@ const GettingStartedScreen = ({ navigation }) => {
         <Animatable.Image
           animation="bounceIn"
           duration={1500}
-          source={require("../../assets/icon.png")}
+          source={require("../../assets/icons/logo.png")}
           style={styles.logo}
           resizeMode="stretch"
         />
@@ -47,7 +47,7 @@ const GettingStartedScreen = ({ navigation }) => {
 export default GettingStartedScreen;
 
 const { height } = Dimensions.get("screen");
-const height_logo = height * 0.28;
+const height_logo = height * 0.40;
 
 const styles = StyleSheet.create({
   container: {
