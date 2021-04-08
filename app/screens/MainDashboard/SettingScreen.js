@@ -1,15 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 
-const ProfileScreen = () => {
+const SettingScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>Profile</Text>
+      <Button onPress={() => navigation.navigate("GettingStarted")} title="Sign Out" />
     </View>
   );
 };
 
-export default ProfileScreen;
+export default SettingScreen;
 
 const styles = StyleSheet.create({
   container: {

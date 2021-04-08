@@ -1,29 +1,29 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import DashboardScreen from "./DashboardScreen";
-import PortfolioScreen from "./PortfolioScreen";
-import MarketScreen from "./MarketScreen";
-import ProfileScreen from "./ProfileScreen";
+import HomeScreen from "./MainDashboard/HomeScreen";
+import PortfolioScreen from "./MainDashboard/PortfolioScreen";
+import MarketScreen from "./MainDashboard/MarketScreen";
+import SettingScreen from "./MainDashboard/SettingScreen";
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Tab = createMaterialBottomTabNavigator();
 
-function HomeScreen() {
+function RootTabScreen() {
   return (
-      <Tab.Navigator
-      initialRouteName="Dashboard"
+    <Tab.Navigator
+      initialRouteName="Home"
       activeColor="indigo"
-      barStyle={{ backgroundColor: 'cyan' }}
+      barStyle={{ backgroundColor: "cyan" }}
     >
       <Tab.Screen
-        name="Dashboard"
-        component={DashboardScreen}
+        name="Home"
+        component={HomeScreen}
         options={{
-          tabBarLabel: 'Dashboard',
+          tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
@@ -33,7 +33,7 @@ function HomeScreen() {
         name="Portfolio"
         component={PortfolioScreen}
         options={{
-          tabBarLabel: 'Portfolio',
+          tabBarLabel: "Portfolio",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
@@ -43,17 +43,21 @@ function HomeScreen() {
         name="Market"
         component={MarketScreen}
         options={{
-          tabBarLabel: 'Market',
+          tabBarLabel: "Market",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="arrow-top-right" color={color} size={26} />
+            <MaterialCommunityIcons
+              name="arrow-top-right"
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="Setting"
+        component={SettingScreen}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: "Settings",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="cog" color={color} size={26} />
           ),
@@ -63,7 +67,7 @@ function HomeScreen() {
   );
 }
 
-export default HomeScreen;
+export default RootTabScreen;
 
 const styles = StyleSheet.create({
   container: {

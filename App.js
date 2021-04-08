@@ -10,8 +10,7 @@ firebase.initializeApp(firebaseConfig);
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import HomeScreen from "./app/screens/HomeScreen";
-import LoginScreen from "./app/screens/LoginScreen";
+import RootTabScreen from "./app/screens/RootTabScreen";
 import LoadingScreen from "./app/screens/LoadingScreen";
 
 import RootStackScreen from "./app/screens/RootStackScreen";
@@ -20,20 +19,13 @@ function App() {
   const [loaded, setLoaded] = useState(true);
   const [auth, setAuth] = useState(true);
 
-  // if (!firebase.apps.length) {
-  //   firebase.initializeApp(fireapi.firebaseConfig);
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     setAuth = true;
-  //   });
-  // }
-
   const Stack = createStackNavigator();
 
   return (
     <NavigationContainer>
       <RootStackScreen />
       {/* <Stack.Navigator initialRouteName="Cypher">
-        <Stack.Screen name="Cypher" component={HomeScreen} />
+        <Stack.Screen name="Cypher" component={RootTabScreen} />
       </Stack.Navigator> */}
     </NavigationContainer>
   );

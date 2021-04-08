@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Platform,
   TextInput,
-  StatusBar
+  StatusBar,
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
@@ -23,7 +23,7 @@ const SignupScreen = ({ navigation }) => {
     confirm_password: "",
     check_textInputChange: false,
     secureTextEntry: true,
-    confirm_secureTextEntry: true
+    confirm_secureTextEntry: true,
   });
 
   const textInputChange = (val) => {
@@ -41,6 +41,14 @@ const SignupScreen = ({ navigation }) => {
       });
     }
   };
+
+  // const handleSignup = () =>{
+  //   firebase
+  //     .auth()
+  //     .createUserWithEmailAndPassword(email, password)
+  //     .then(() => navigation.navigate('Home'))
+  //     .catch(error => console.log(error.message))
+  // }
 
   const handlePasswordChange = (val) => {
     setData({
@@ -112,7 +120,9 @@ const SignupScreen = ({ navigation }) => {
             )}
           </TouchableOpacity>
         </View>
-        <Text style={([styles.text_footer], { marginTop: 35 })}>Confirm Password</Text>
+        <Text style={([styles.text_footer], { marginTop: 35 })}>
+          Confirm Password
+        </Text>
         <View style={styles.action}>
           <MaterialCommunityIcons name="lock" color="#05375a" size={20} />
           <TextInput
@@ -130,9 +140,17 @@ const SignupScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.button}>
-          <LinearGradient colors={["#08d4c4", "#01ab9d"]} style={styles.signIn}>
-            <Text style={styles.textSign}>Sign Up</Text>
-          </LinearGradient>
+          <TouchableOpacity
+            style={styles.signIn}
+            onPress={() => navigation.navigate("Dashboard")}
+          >
+            <LinearGradient
+              colors={["#08d4c4", "#01ab9d"]}
+              style={styles.signIn}
+            >
+              <Text style={styles.textSign}>Sign Up</Text>
+            </LinearGradient>
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={[
