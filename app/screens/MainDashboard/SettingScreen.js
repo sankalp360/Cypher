@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Button } from "react-native";
 const SettingScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Button onPress={() => navigation.navigate("GettingStarted")} title="Sign Out" />
+      <Button onPress={() => navigation.navigate("Login")} title="Sign Out" />
     </View>
   );
 };
