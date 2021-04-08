@@ -2,10 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import firebase from "firebase";
-import { firebaseConfig } from "./app/config/firebase";
-
-firebase.initializeApp(firebaseConfig);
+import { fireapp } from "./app/config/firebase";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,6 +12,8 @@ import LoadingScreen from "./app/screens/LoadingScreen";
 
 import RootStackScreen from "./app/screens/RootStackScreen";
 
+import { AuthProvider } from "./app/contexts/AuthContext";
+
 function App() {
   const [loaded, setLoaded] = useState(true);
   const [auth, setAuth] = useState(true);
@@ -22,12 +21,14 @@ function App() {
   const Stack = createStackNavigator();
 
   return (
-    <NavigationContainer>
-      <RootStackScreen />
-      {/* <Stack.Navigator initialRouteName="Cypher">
+    <AuthProvider>
+      <NavigationContainer>
+        <RootStackScreen />
+        {/* <Stack.Navigator initialRouteName="Cypher">
         <Stack.Screen name="Cypher" component={RootTabScreen} />
       </Stack.Navigator> */}
-    </NavigationContainer>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
 

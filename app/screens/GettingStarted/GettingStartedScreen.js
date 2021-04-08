@@ -27,8 +27,8 @@ const GettingStartedScreen = ({ navigation }) => {
         />
       </View>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
-        <Text style={styles.title}>Cypher In Your Hands</Text>
-        <Text style={styles.text}>Sign In With Account</Text>
+        <Text style={styles.title}>Cypher: Secure Payments</Text>
+        <Text style={styles.text}>Send Money Seamlessly</Text>
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <LinearGradient
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "grey",
-    marginTop: 5,
+    marginTop: 10,
   },
   button: {
     alignItems: "flex-end",
