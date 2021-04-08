@@ -26,6 +26,7 @@ const SignupScreen = ({ navigation }) => {
     check_textInputChange: false,
     secureTextEntry: true,
     confirm_secureTextEntry: true,
+    isValidEmail: true,
   });
 
   const textInputChange = (val) => {
@@ -79,7 +80,7 @@ const SignupScreen = ({ navigation }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => navigation.navigate("Dashboard"))
-      .catch((error) => console.log(error.message));
+      .catch((error) => setData({ ...data, isValidEmail: false }));
   };
 
   return (
@@ -107,6 +108,11 @@ const SignupScreen = ({ navigation }) => {
             </Animatable.View>
           ) : null}
         </View>
+        {data.isValidEmail ? null : (
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Invalid Email</Text>
+          </Animatable.View>
+        )}
         <Text style={([styles.text_footer], { marginTop: 35 })}>Password</Text>
         <View style={styles.action}>
           <MaterialCommunityIcons name="lock" color="#05375a" size={20} />
@@ -234,5 +240,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
+  },
+  errorMsg: {
+    color: "red",
+    fontSize: 12,
   },
 });

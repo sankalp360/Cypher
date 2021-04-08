@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   Platform,
   TextInput,
-  StatusBar
+  StatusBar,
+  Alert,
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
@@ -24,6 +25,8 @@ const LoginScreen = ({ navigation }) => {
     password: "",
     check_textInputChange: false,
     secureTextEntry: true,
+    isValidEmail: true,
+    isValidPassword: true,
   });
 
   const textInputChange = (val) => {
@@ -59,11 +62,17 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = () => {
     let email = data.email;
     let password = data.password;
-    fireapp
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => navigation.navigate("Dashboard"))
-      .catch((error) => console.log(error.message));
+    try {
+      fireapp
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => navigation.navigate("Dashboard"))
+        .catch((error) => {
+          setData({ ...data, isValidEmail: false, isValidPassword: false})
+          })
+    } catch (err) {
+      alert("Error : ", err);
+    }
   };
 
   return (
@@ -91,6 +100,11 @@ const LoginScreen = ({ navigation }) => {
             </Animatable.View>
           ) : null}
         </View>
+        {data.isValidEmail ? null : (
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Invalid Email</Text>
+          </Animatable.View>
+        )}
         <Text style={([styles.text_footer], { marginTop: 35 })}>Password</Text>
         <View style={styles.action}>
           <MaterialCommunityIcons name="lock" color="#05375a" size={20} />
@@ -108,11 +122,19 @@ const LoginScreen = ({ navigation }) => {
             )}
           </TouchableOpacity>
         </View>
+        {data.isValidPassword ? null : (
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Incorrect Password</Text>
+          </Animatable.View>
+        )}
         <View style={styles.button}>
           <TouchableOpacity style={styles.signIn} onPress={() => handleLogin()}>
-          <LinearGradient colors={["#08d4c4", "#01ab9d"]} style={styles.signIn}>
-            <Text style={styles.textSign}>Login</Text>
-          </LinearGradient>
+            <LinearGradient
+              colors={["#08d4c4", "#01ab9d"]}
+              style={styles.signIn}
+            >
+              <Text style={styles.textSign}>Login</Text>
+            </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.navigate("Signup")}
@@ -193,5 +215,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
+  },
+  errorMsg: {
+    color: "red",
+    fontSize: 12,
   },
 });
