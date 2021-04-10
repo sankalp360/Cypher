@@ -16,8 +16,8 @@ function RootTabScreen() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      activeColor="indigo"
-      barStyle={{ backgroundColor: "cyan" }}
+      activeColor="#93000c"
+      barStyle={{ backgroundColor: "#009387" }}
     >
       <Tab.Screen
         name="Home"

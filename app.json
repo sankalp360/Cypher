@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./app/assets/favicon.png"
-    }
+    },
+    "description": "Cypher is an Advanced Crypto Wallet",
+    "githubUrl": "https://github.com/acousticclown/cypher"
   }
 }
