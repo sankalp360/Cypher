@@ -1,11 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
-import firebase from "firebase";
+import firebase from "firebase/app";
 import "firebase/auth";
-
-import fireapp from "../../config/firebase";
-
 
 const HomeScreen = () => {
   const getToken = () => {
@@ -31,7 +28,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f0f0f0",
     alignItems: "center",
     justifyContent: "center",
   },

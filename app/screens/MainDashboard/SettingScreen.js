@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
-import firebase from "firebase";
+import firebase from "firebase/app";
 import "firebase/auth";
 
 const SettingScreen = ({ navigation }) => {
