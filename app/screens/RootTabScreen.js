@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Image, TouchabaleOpacity, Text, StyleSheet } from "react-native";
+import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
+import * as Animatable from "react-native-animatable";
 // import LinearGradient from 'react-native-linear-gradient';
 
 import HomeScreen from "./MainDashboard/HomeScreen";
@@ -93,15 +94,13 @@ function RootTabScreen() {
         options={{
           tabBarLabel: "Transaction",
           tabBarIcon: ({ focused }) => (
-            <View
-              style={styles.transactionBtn}
-            >
+            <Animatable.View style={styles.transactionBtn}>
               <MaterialCommunityIcons
                 name="repeat"
                 color={focused ? COLORS.white : COLORS.white}
                 size={30}
               />
-            </View>
+            </Animatable.View>
           ),
         }}
       />
@@ -172,13 +171,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  transactionBtn:
-    {
-      alignItems: "center",
-      justifyContent: "center",
-      height: 60,
-      width: 60,
-      backgroundColor: COLORS.primary,
-      borderRadius: 50
-    }
+  transactionBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: 60,
+    width: 60,
+    backgroundColor: COLORS.primary,
+    borderRadius: 50,
+  },
 });
