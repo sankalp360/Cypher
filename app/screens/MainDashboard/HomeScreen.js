@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Button, ScrollView, FlatList, TouchableOpacity,
 import firebase from "firebase/app";
 import "firebase/auth";
 
-import { COLORS, SIZES, FONTS, icons } from '../../config';
+import {  icons } from '../../config';
+import {COLORS,FONTS,SIZES} from '../../config/theme'
 import images from "../../config/images";
 import { shadow } from "react-native-paper";
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
@@ -62,7 +63,25 @@ const HomeScreen = () => {
       <View
         style={styles.coinbox}
       >
-        <Text >BOX</Text>
+    
+      </View>
+    )
+  }
+  const coinbox2 = () => {
+    return (
+      <View
+        style={styles.coinbox2}
+      >
+    
+      </View>
+    )
+  }
+  const messagebox = () => {
+    return (
+      <View
+        style={styles.messagebox}
+      >
+    
       </View>
     )
   }
@@ -73,7 +92,11 @@ const HomeScreen = () => {
 
         {header()}
         {coinbox()}
-
+        {coinbox2()}
+        {coinbox()}
+        {coinbox2()}
+        {coinbox()}
+        {coinbox2()}
       </View>
     </ScrollView>
   );
@@ -93,9 +116,29 @@ const styles = StyleSheet.create({
   coinbox: {
     width: '90%',
     height: 100,
-    backgroundColor: 'red',
+    backgroundColor: COLORS.primary,
     marginVertical: 10,
     marginHorizontal: 20,
+    opacity:0.72,
+    borderRadius:SIZES.radius,
+  },
+  coinbox2: {
+    width: '90%',
+    height: 100,
+    backgroundColor: COLORS.primary,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    opacity:0.9,
+    borderRadius:SIZES.radius,
+  },
+  messagebox: {
+    width: '90%',
+    height: 100,
+    backgroundColor: COLORS.primary,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    opacity:0.9,
+    borderRadius:SIZES.radius,
   },
 });
 
