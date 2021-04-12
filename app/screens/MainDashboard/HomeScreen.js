@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 
-import * as firebase from "firebase/app";
+import firebase from "firebase";
 import "firebase/auth";
 
 import fireapp from "../../config/firebase";
+
 
 const HomeScreen = () => {
   const getToken = () => {
@@ -19,7 +20,8 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Button onPress={() => getToken()} title="Get Token" />
+      <Button onPress={() => getToken()} title="Get Token" />                    
+     
     </View>
   );
 };

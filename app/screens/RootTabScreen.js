@@ -1,31 +1,58 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { View,Image,TouchabaleOpacity,Text, StyleSheet} from "react-native";
+// import LinearGradient from 'react-native-linear-gradient';
 
 import HomeScreen from "./MainDashboard/HomeScreen";
 import PortfolioScreen from "./MainDashboard/PortfolioScreen";
+import TransactionScreen from "./MainDashboard/TransactionScreen";
 import MarketScreen from "./MainDashboard/MarketScreen";
 import SettingScreen from "./MainDashboard/SettingScreen";
 
+//for theame ......................
+import appTheme, { COLORS, FONTS } from "../assets/theme";
+import {icons} from "../assets";
+
+//  .....................change.....................
 import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 function RootTabScreen() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
-      activeColor="indigo"
-      barStyle={{ backgroundColor: "cyan" }}
+      
+      tabBarOptions={{
+          showLabel : false,
+          style:{
+            position :'absolute',
+            bottom:0,
+            right:0,
+            left:0,
+            elevation:0,
+            backgroundColor:COLORS.white,
+            height :100,
+            borderTopColor:"transparent",
+          }
+      }
+      }
     >
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
           tabBarLabel: "Home",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+          tabBarIcon: ({ focused }) => (
+            <View style = {styles.IconView}>
+            <MaterialCommunityIcons 
+            name="home" 
+            color={focused?COLORS.primary:COLORS.black}
+            size={30} />
+            
+            <Text  style={{ color:focused?COLORS.primary:COLORS.black,...FONTS.body5,}}>HOME</Text>
+            </View>
           ),
         }}
       />
@@ -34,9 +61,39 @@ function RootTabScreen() {
         component={PortfolioScreen}
         options={{
           tabBarLabel: "Portfolio",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
+          tabBarIcon: ({ focused }) => (
+            <View style={styles.IconView}>
+            <MaterialCommunityIcons 
+            name="account" 
+            color={focused?COLORS.primary:COLORS.black} 
+            size={30} />
+
+            <Text style={{color:focused?COLORS.primary:COLORS.black,...FONTS.body5}}>PortFolio</Text>
+            </View>
           ),
+        }}
+        
+      />
+       <Tab.Screen
+        name="Transaction"
+        component={TransactionScreen}
+        options={{
+          tabBarLabel: "Transaction",
+          tabBarIcon:({focused})=>{
+            <View>
+                <Image
+                  source={icons.transaction}
+                  resizeMode='contain'
+                  style={
+                    {
+                      color:focused?COLORS.primary:COLORS.black
+                    }
+                  }
+                />
+                <Text>TRANSACT</Text>
+                </View>
+          }
+          
         }}
       />
       <Tab.Screen
@@ -44,12 +101,15 @@ function RootTabScreen() {
         component={MarketScreen}
         options={{
           tabBarLabel: "Market",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: ({ focused }) => (
+            <View style = {styles.IconView}>
             <MaterialCommunityIcons
               name="arrow-top-right"
-              color={color}
-              size={26}
+              color={focused?COLORS.primary:COLORS.black}
+              size={30}
             />
+            <Text style={{color:focused?COLORS.primary:COLORS.black,...FONTS.body5}}>Market</Text>
+            </View>
           ),
         }}
       />
@@ -58,8 +118,15 @@ function RootTabScreen() {
         component={SettingScreen}
         options={{
           tabBarLabel: "Settings",
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="cog" color={color} size={26} />
+          tabBarIcon: ({ focused }) => (
+            <View style = {styles.IconView}>
+            <MaterialCommunityIcons
+             name="cog" 
+             color={focused?COLORS.primary:COLORS.black}
+              size={30}
+            />
+            <Text style={{color:focused?COLORS.primary:COLORS.black,...FONTS.body5}}>Settings</Text>
+          </View>
           ),
         }}
       />
@@ -76,4 +143,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  IconView:{
+    justifyContent:'center',
+    alignItems:'center'
+  }
 });
