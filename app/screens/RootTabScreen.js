@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet } from "react-native";
 import * as Animatable from "react-native-animatable";
 // import LinearGradient from 'react-native-linear-gradient';
 
