@@ -16,6 +16,7 @@ import icons from "../config/icons";
 //  .....................change.....................
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Tab = createBottomTabNavigator();
 
@@ -133,6 +134,7 @@ function RootTabScreen() {
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ focused }) => (
+            <TouchableOpacity>
             <View style={styles.IconView}>
               <MaterialCommunityIcons
                 name="cog"
@@ -148,6 +150,7 @@ function RootTabScreen() {
                 Settings
               </Text>
             </View>
+            </TouchableOpacity>
           ),
         }}
       />
