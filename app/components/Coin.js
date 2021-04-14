@@ -1,19 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 
-const Coin = ({
-  name,
-  image,
-  symbol,
-  price,
-  priceChange,
-}) => {
+const Coin = ({ name, image, symbol, price, priceChange }) => {
   let firstName = name.split(" ");
 
   return (
     <View style={styles.container}>
       <View style={styles.coinRow}>
-        <Image resizeMode="contain" style={styles.crypto} source={image} />
+        <Image
+          resizeMode="contain"
+          style={styles.crypto}
+          source={{ uri: image }}
+        />
         <View style={styles.coin}>
           <Text style={styles.name}>{firstName[0]}</Text>
           <Text style={styles.coinSymbol}>{symbol}</Text>
@@ -67,7 +65,6 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: "bold",
     fontSize: 20,
-    textWrap: "nowrap",
   },
   coinSymbol: {
     textTransform: "uppercase",
@@ -77,9 +74,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
   },
-  coinPrice:{
+  coinPrice: {
     fontSize: 15,
-    fontWeight: "semibold",
+    fontWeight: "400",
   },
   coinPercentRed: {
     color: "red",
