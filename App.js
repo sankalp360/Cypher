@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { StatusBar } from "expo-status-bar";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -26,10 +27,19 @@ function App() {
   });
 
   return (
-    <NavigationContainer>
-      {user ? <RootTabScreen /> : <RootStackScreen />}
-    </NavigationContainer>
+    <View style={styles.container}>
+      <StatusBar backgroundColor="white" />
+      <NavigationContainer>
+        {user ? <RootTabScreen /> : <RootStackScreen />}
+      </NavigationContainer>
+    </View>
   );
 }
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
+})

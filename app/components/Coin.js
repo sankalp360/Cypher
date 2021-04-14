@@ -17,7 +17,7 @@ const Coin = ({ name, image, symbol, price, priceChange }) => {
           <Text style={styles.coinSymbol}>{symbol}</Text>
         </View>
         <View style={styles.coinData}>
-          <Text style={styles.coinPrice}>Price: {price.toLocaleString()}</Text>
+          <Text style={styles.coinPrice}>₹{price.toLocaleString()}</Text>
           {priceChange < 0 ? (
             <Text style={styles.coinPercentRed}>
               Loss: {priceChange.toFixed(2)}%
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     alignItems: "center",
-    marginVertical: 8,
+    marginBottom: 16,
     flexDirection: "row",
     padding: 10,
     borderRadius: 10,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   coinPrice: {
     fontSize: 15,
-    fontWeight: "400",
+    fontWeight: "600",
   },
   coinPercentRed: {
     color: "red",

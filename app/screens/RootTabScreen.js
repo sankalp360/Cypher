@@ -27,13 +27,8 @@ function RootTabScreen() {
       tabBarOptions={{
         showLabel: false,
         style: {
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          left: 0,
-          elevation: 0,
           backgroundColor: COLORS.white,
-          height: 100,
+          height: 70,
           borderTopColor: "transparent",
         },
       }}
@@ -135,21 +130,21 @@ function RootTabScreen() {
           tabBarLabel: "Settings",
           tabBarIcon: ({ focused }) => (
             <TouchableOpacity>
-            <View style={styles.IconView}>
-              <MaterialCommunityIcons
-                name="cog"
-                color={focused ? COLORS.primary : COLORS.black}
-                size={30}
-              />
-              <Text
-                style={{
-                  color: focused ? COLORS.primary : COLORS.black,
-                  ...FONTS.body5,
-                }}
-              >
-                Settings
-              </Text>
-            </View>
+              <View style={styles.IconView}>
+                <MaterialCommunityIcons
+                  name="cog"
+                  color={focused ? COLORS.primary : COLORS.black}
+                  size={30}
+                />
+                <Text
+                  style={{
+                    color: focused ? COLORS.primary : COLORS.black,
+                    ...FONTS.body5,
+                  }}
+                >
+                  Settings
+                </Text>
+              </View>
             </TouchableOpacity>
           ),
         }}
