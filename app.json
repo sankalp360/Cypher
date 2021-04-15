@@ -10,6 +10,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "owner": "teamcypher",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
