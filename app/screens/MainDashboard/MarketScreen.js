@@ -33,6 +33,7 @@ function MarketScreen() {
 
   return (
     <ScrollView data={coins} style={styles.container}>
+      <Text style={styles.marketHeading}>Market</Text>
       <View style={styles.coinSearch}>
         <TextInput
           style={styles.textIn}
@@ -64,11 +65,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     padding: 20,
   },
+  marketHeading: {
+    marginTop: 20,
+    fontSize: 26,
+    fontWeight: "bold",
+  },
   coinSearch: {
     flex: 1,
     width: "100%",
     height: 70,
-    marginTop: 5,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -86,6 +91,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     color: "black",
     marginRight: 5,
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
 });
