@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./app/assets/icons/logo.png",
     "splash": {
-      "image": "./app/assets/images/banner1.png",
+      "image": "./app/assets/images/cypher_splash_screen.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
