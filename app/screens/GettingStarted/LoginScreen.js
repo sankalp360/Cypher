@@ -77,7 +77,7 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#009387" barStyle="light-content" />
+      <StatusBar backgroundColor="#7F5DF0" barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>Welcome!!</Text>
       </View>
@@ -130,7 +130,7 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.button}>
           <TouchableOpacity style={styles.signIn} onPress={() => handleLogin()}>
             <LinearGradient
-              colors={["#08d4c4", "#01ab9d"]}
+              colors={["#7F5DF0", "#513C98"]}
               style={styles.signIn}
             >
               <Text style={styles.textSign}>Login</Text>
@@ -141,13 +141,13 @@ const LoginScreen = ({ navigation }) => {
             style={[
               styles.signIn,
               {
-                borderColor: "#009387",
+                borderColor: "#513C98",
                 borderWidth: 1,
                 marginTop: 15,
               },
             ]}
           >
-            <Text style={[styles.textSign, { color: "#009387" }]}>Sign Up</Text>
+            <Text style={[styles.textSign, { color: "#513C98" }]}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </Animatable.View>
@@ -162,7 +162,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#009387",
+    backgroundColor: "#7F5DF0",
   },
   header: {
     flex: 1,

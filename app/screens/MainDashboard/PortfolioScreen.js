@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { LineChart } from "react-native-chart-kit";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import AssetCard from "../../components/AssetCard";
 
 const PortfolioScreen = () => {
   return (
@@ -68,11 +69,32 @@ const PortfolioScreen = () => {
         </View>
       </LinearGradient>
       <Text style={styles.assets}>Your Assets</Text>
-      <View style={styles.coinbox}></View>
-      <View style={styles.coinbox}></View>
+      <AssetCard
+        icon="bitcoin"
+        name="Bitcoin"
+        symbol="BTC"
+        worth="$70,000"
+        change="10.25%"
+        changeColor="green"
+        iconName="chevron-up"
+      />
+      <AssetCard
+        icon="ethereum"
+        name="Ethereum"
+        symbol="ETH"
+        worth="$10,000"
+        change="2.65%"
+        changeColor="red"
+        iconName="chevron-down"
+      />
+      {/* <View style={styles.coinbox}></View> */}
       <TouchableOpacity style={styles.moreAssets}>
         <Text style={styles.moreAssetsText}>More Assets</Text>
-        <MaterialCommunityIcons name="chevron-right" color="blue" size={20} />
+        <MaterialCommunityIcons
+          name="chevron-right"
+          color="#513C98"
+          size={20}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -169,7 +191,7 @@ const styles = StyleSheet.create({
   },
   moreAssetsText: {
     textDecorationLine: "underline",
-    color: "blue",
+    color: "#513C98",
     fontWeight: "600",
     fontSize: 15,
   },
