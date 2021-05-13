@@ -4,11 +4,12 @@ import { StyleSheet, Text, View, Button, ScrollView, FlatList, TouchableOpacity,
 import firebase from "firebase/app";
 import "firebase/auth";
 
-import {  icons } from '../../config';
+import {  icons,Data } from '../../config';
 import {COLORS,FONTS,SIZES} from '../../config/theme'
 import images from "../../config/images";
 import { shadow } from "react-native-paper";
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
+import dummyData from "../../config/data";
 
 
 const HomeScreen = () => {
@@ -22,8 +23,47 @@ const HomeScreen = () => {
       }
     });
   };
+
+  // currencies data baad me api se lena hai
+   // build a usestate 
+  const [trending, setTrending] = React.useState(dummyData.trendingCurrencies)
+  //  dummyData.trendingCurrencies is dummy data of currencies
+
   // header function
   function header() {
+
+    //this is my flatlist's render function
+    const renderItem =({item,index})=>{
+      <TouchableOpacity
+        style={{
+          width :180,
+          paddingVertical:27,
+          paddingHorizontal:27,
+           backgroundColor:COLORS.white,
+           marginLeft:index==0?27:0,
+           marginRight:10,
+           borderRadius:10,
+          
+        }}
+      >
+
+      <View>
+           <View>
+                {/* <Image
+                  source={item.image}
+                  resizeMode='cover'
+                  style={{
+                     width :25,
+                     height:25,
+                  }}
+                />      */}
+                 <Text>{item.id}</Text>
+           </View>
+      </View>
+      </TouchableOpacity>
+    }
+
+    //end of renderItem
     return (
       <View
         style={
@@ -45,13 +85,27 @@ const HomeScreen = () => {
             }
           }
         >
+        {/* header balance niche */}
               <View
-                style={{ alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent' ,width:'75%' ,height:100,marginVertical:30,}}
+                style={{ alignItems: 'center', justifyContent: 'center', backgroundColor:'transparent' ,width:'75%' ,height:100,marginVertical:33,}}
               >
-                <Text style={{color:'white'}}>Your Current Balance</Text>
-                <Text style={{color:'white' , fontSize:25,}}>RS 150000 </Text>
-                <Text>+2.14 updated</Text>
+                <Text style={{color:COLORS.white}}>Your Current Balance</Text>
+                <Text style={{color:COLORS.white , fontSize:22.5,}}>RS {dummyData.portfolio.balance}</Text>
+                <Text style={{fontWeight:'bold'}}>{dummyData.portfolio.changes} Last 24 hours</Text>
+              </View> 
+
+              {/* // bichhh vale.....dabbe */}
+              <View>
+              <Text >Boxes</Text>
+              <FlatList
+                data = {trending}
+                renderItem={renderItem}
+                keyExtractor={item =>item.id }
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              />
               </View>
+
         </ImageBackground>
 
       </View>
