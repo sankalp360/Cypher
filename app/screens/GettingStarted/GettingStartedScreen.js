@@ -7,6 +7,7 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  StatusBar,
 } from "react-native";
 
 // import LinearGradient from "react-native-linear-gradient";
@@ -17,6 +18,7 @@ import * as Animatable from "react-native-animatable";
 const GettingStartedScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#7F5DF0" barStyle="light-content" />
       <View style={styles.header}>
         <Animatable.Image
           animation="bounceIn"
@@ -32,7 +34,7 @@ const GettingStartedScreen = ({ navigation }) => {
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <LinearGradient
-              colors={["#08d4c4", "#01ab9d"]}
+              colors={["#7F5DF0", "#513C98"]}
               style={styles.signIn}
             >
               <Text style={styles.textSign}>Getting Started</Text>
@@ -47,12 +49,12 @@ const GettingStartedScreen = ({ navigation }) => {
 export default GettingStartedScreen;
 
 const { height } = Dimensions.get("screen");
-const height_logo = height * 0.40;
+const height_logo = height * 0.4;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#009387",
+    backgroundColor: "#7F5DF0",
   },
   header: {
     flex: 2,
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
     height: height_logo,
   },
   title: {
-    color: "#05375a",
+    color: "#513C98",
     fontSize: 30,
     fontWeight: "bold",
   },
