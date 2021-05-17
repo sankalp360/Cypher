@@ -7,8 +7,8 @@ export const COLORS = {
 
   white: "#fff",
   black: "#000000",
-  green: "#37E39F",
-  red: "#F9A8BA",
+  green: "green",
+  red: "red",
   gray: "#6A6A6A",
   lightGray: "#dbdbdb",
   lightGray1: "#f5f6fa",
@@ -36,37 +36,38 @@ export const SIZES = {
   height,
 };
 export const FONTS = {
-  h1: { fontFamily: "Roboto-Black", fontSize: SIZES.h1, lineHeight: 36 },
-  h2: { fontFamily: "Roboto-Bold", fontSize: SIZES.h2, lineHeight: 30 },
-  h3: { fontFamily: "Roboto-Bold", fontSize: SIZES.h3, lineHeight: 22 },
-  h4: { fontFamily: "Roboto-Bold", fontSize: SIZES.h4, lineHeight: 22 },
+  h1: { fontFamily: "sans-serif", fontSize: SIZES.h1, lineHeight: 36 },
+  h2: { fontFamily: "sans-serif", fontSize: SIZES.h2, lineHeight: 30 },
+  h3: { fontFamily: "sans-serif", fontSize: SIZES.h3, lineHeight: 22 },
+  h4: { fontFamily: "sans-serif", fontSize: SIZES.h4, lineHeight: 22 },
+  
   body1: {
-    fontFamily: "Roboto-Regular",
+    // fontFamily: "Roboto-Regular",
+    fontFamily: "sans-serif",
     fontSize: SIZES.body1,
     lineHeight: 36,
   },
   body2: {
-    fontFamily: "Roboto-Regular",
+    // fontFamily: "Roboto-Regular",
+    fontFamily: "sans-serif",
     fontSize: SIZES.body2,
     lineHeight: 30,
   },
   body3: {
-    fontFamily: "Roboto-Regular",
+    // fontFamily: "Roboto-Regular",
+    fontFamily: "sans-serif",
     fontSize: SIZES.body3,
     lineHeight: 22,
   },
   body4: {
-    fontFamily: "Roboto-Regular",
+    // fontFamily: "Roboto-Regular",
+    fontFamily: "sans-serif",
     fontSize: SIZES.body4,
     lineHeight: 22,
   },
   body5: {
-    fontFamily: "Roboto-Regular",
+    fontFamily: "sans-serif",
     fontSize: SIZES.body5,
     lineHeight: 22,
   },
 };
-
-const theme = { COLORS, SIZES, FONTS };
-
-export default theme;
