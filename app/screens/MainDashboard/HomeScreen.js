@@ -148,6 +148,8 @@ const HomeScreen = () => {
             <Text style={{color:COLORS.white,...FONTS.body5}}>{dummyData.portfolio.changes}  Last 24 Hours</Text>
           </View>
 
+
+        </ImageBackground>
           {/* Scrolling Section */}
            <View
               style={{
@@ -169,8 +171,6 @@ const HomeScreen = () => {
             />
             
            </View>
-
-        </ImageBackground>
       </View>
         //  {/* //end of header image */}
     );
