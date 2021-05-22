@@ -26,6 +26,8 @@ import { Header } from 'react-native-elements';
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import icons from "../../config/icons";
 
+import PriceAlert from "../../components/PriceAlert";
+
 const HomeScreen = () => {
   //   firebase gettoken function
   const getToken = () => {
@@ -178,18 +180,19 @@ const HomeScreen = () => {
               // end of banner and header section
   
               // start of alert section
-              // function renderAlert(){
-              //   return(
-              //     // {PriceAlert()}
-              //   )
-              // }
+              function renderAlert(){
+                return(
+                  <PriceAlert />
+                )
+              }
 
   return (
     <ScrollView>
       <View style={styles.container}>
         {renderheader()}
+        {renderAlert()}
         {/* {renderAlert()} */}
-        {/* {coinbox()}
+        {/* {coinbox()} 
         {coinbox2()}
         {coinbox()}
         {coinbox2()}
