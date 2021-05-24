@@ -23,7 +23,7 @@ import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import dummyData from "../../config/data";
 
 import { Header } from 'react-native-elements';
-import { Colors } from "react-native/Libraries/NewAppScreen";
+// import { Colors } from "react-native/Libraries/NewAppScreen";
 import icons from "../../config/icons";
 
 const HomeScreen = () => {
