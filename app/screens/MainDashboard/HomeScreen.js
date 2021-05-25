@@ -25,6 +25,7 @@ import dummyData from "../../config/data";
 import { Header } from 'react-native-elements';
 // import { Colors } from "react-native/Libraries/NewAppScreen";
 import icons from "../../config/icons";
+import SettingCard from "../../components/SettingCard";
 
 import PriceAlert from "../../components/PriceAlert";
 
@@ -62,6 +63,7 @@ const HomeScreen = () => {
            borderRadius:10,  
            backgroundColor:COLORS.white           
         }}
+        // onPress={()=> navigation.navigate('MarketScreen')}
       >
       
     {/* Currencies card */}
@@ -185,6 +187,9 @@ const HomeScreen = () => {
                   <PriceAlert />
                 )
               }
+
+
+              // This is start of notice box function
               function NoticeBOX()
               {
                 return(
@@ -201,8 +206,8 @@ const HomeScreen = () => {
                   >
                       
                       {/* create two text Componenet */}
-                      <Text style={{color:COLORS.white,...FONTS.h3}}>Investing Safety</Text>
-                      <Text style={{color:COLORS.white,marginTop:8,lineHeight:18,...FONTS.body4}}>It's very difficult to time Investment Espesially when market is volatile.Learn how to use currency cost averaging to your advantage.</Text>
+                      <Text style={{color:COLORS.white,...FONTS.h3,marginHorizontal:8}}>Investing Safety</Text>
+                      <Text style={{color:COLORS.white,marginTop:8,lineHeight:18,...FONTS.body4,marginHorizontal:8}}>It's very difficult to time Investment Espesially when market is volatile.Learn how to use currency cost averaging to your advantage.</Text>
                 
                       {/* learn more button */}
                       <TouchableOpacity 
@@ -211,10 +216,35 @@ const HomeScreen = () => {
                       }}
                       onPress={()=>{console.log("Learn More ")}}
                       >
-                      <Text style={{color:"#FFD014",textDecorationLine:"underline"}}>Learn More ></Text> 
+                      <Text style={{color:"#F0B0F0",textDecorationLine:"underline",marginHorizontal:8}}>Learn More ></Text> 
                       </TouchableOpacity>
                 
                 
+                  </View>
+                )
+              }
+              //End of Notice Box
+              
+              function TransactionBOX(){
+                return(
+                  <View
+                    style={{
+                    marginTop:SIZES.padding,
+                    marginHorizontal:SIZES.padding,
+                    padding:10,
+                    backgroundColor:COLORS.white,
+                    borderRadius:SIZES.radius,
+                  }}>
+
+                                  
+                    
+                     <SettingCard
+                         icon="history"
+                         title="Transaction History"
+                         subtitle="All your transactions on Cypher"
+                    />               
+                    
+                  
                   </View>
                 )
               }
@@ -225,7 +255,7 @@ const HomeScreen = () => {
         {renderheader()}
         {renderAlert()}
         {NoticeBOX()}
-        {/* {QuoteBOX()} */}
+        {TransactionBOX()}
         {/* {renderAlert()} */}
         {/* {coinbox()} 
         {coinbox2()}
