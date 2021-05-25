@@ -15,6 +15,7 @@ import AssetCard from "../../components/AssetCard";
 import NewWallet from "../../components/NewWallet";
 
 import { db, fireauth } from "../../config/firebase";
+import CryptoRequest from "../../components/CryptoRequest";
 
 const PortfolioScreen = () => {
   const [wallet, setWallet] = useState({
@@ -22,6 +23,7 @@ const PortfolioScreen = () => {
     phone: "",
     country: "",
     walletId: "",
+    privateKey: "",
   });
 
   const [isWallet, setIsWallet] = useState(false);
@@ -46,6 +48,7 @@ const PortfolioScreen = () => {
             phone: doc.data().phone,
             country: doc.data().country,
             walletId: doc.data().walletId,
+            privateKey: doc.data().privateKey,
           });
         } else {
           // doc.data() will be undefined in this case
@@ -59,21 +62,6 @@ const PortfolioScreen = () => {
 
   function handleWallet(childData) {
     setIsWallet(childData);
-  }
-
-  function handleCryptoAccess() {
-    db.collection("wallets")
-      .doc(uid)
-      .set({
-        name: wallet.name,
-        phone: wallet.phone,
-        country: wallet.country,
-        walletId: "0xcd319e22dbc4b55492002d4b116d00d5f6072a61",
-      })
-      .then(() => {
-        console.log("document written");
-      })
-      .catch((err) => console.log(err.message));
   }
 
   function handleDelete() {
@@ -105,17 +93,12 @@ const PortfolioScreen = () => {
                 Your portfolio looks great today
               </Text>
             ) : (
-              <View>
-                <Text style={styles.hiddenText}>Just One More Step</Text>
-                <TouchableOpacity
-                  style={styles.cryptoAccess}
-                  onPress={handleCryptoAccess}
-                >
-                  <Text style={styles.cryptoAccessText}>
-                    Crypto Access Request
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <CryptoRequest
+                uid={uid}
+                name={wallet.name}
+                phone={wallet.phone}
+                country={wallet.country}
+              />
             )}
             {wallet.walletId ? (
               <LinearGradient
@@ -252,26 +235,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     color: "black",
     fontWeight: "bold",
-  },
-  hiddenText: {
-    fontSize: 30,
-    marginTop: 250,
-    textAlign: "center",
-  },
-  cryptoAccess: {
-    width: "100%",
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#513C98",
-    marginVertical: 100,
-    backgroundColor: "#7F5DF0",
-  },
-  cryptoAccessText: {
-    fontWeight: "bold",
-    color: "#fff",
   },
   portfolioSubHeading: {
     fontSize: 16,

@@ -52,6 +52,7 @@ const NewWallet = ({ uid, isWallet }) => {
         phone: wallet.phone,
         country: wallet.country,
         walletId: "",
+        privateKey: "",
       })
       .then(() => {
         isWallet(true);
