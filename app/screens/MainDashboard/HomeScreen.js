@@ -23,7 +23,7 @@ import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import dummyData from "../../config/data";
 
 import { Header } from 'react-native-elements';
-import { Colors } from "react-native/Libraries/NewAppScreen";
+// import { Colors } from "react-native/Libraries/NewAppScreen";
 import icons from "../../config/icons";
 
 import PriceAlert from "../../components/PriceAlert";
@@ -185,12 +185,47 @@ const HomeScreen = () => {
                   <PriceAlert />
                 )
               }
+              function NoticeBOX()
+              {
+                return(
+                  <View
+                    style={{
+                     
+                      marginTop:SIZES.padding,
+                      marginHorizontal:SIZES.padding,
+                      padding:10,
+                      borderRadius:SIZES.radius,
+                      backgroundColor:COLORS.secondary,
+                      ...styles.shadow,
+                    }}
+                  >
+                      
+                      {/* create two text Componenet */}
+                      <Text style={{color:COLORS.white,...FONTS.h3}}>Investing Safety</Text>
+                      <Text style={{color:COLORS.white,marginTop:8,lineHeight:18,...FONTS.body4}}>It's very difficult to time Investment Espesially when market is volatile.Learn how to use currency cost averaging to your advantage.</Text>
+                
+                      {/* learn more button */}
+                      <TouchableOpacity 
+                      style={{
+                        marginTop:SIZES.base,
+                      }}
+                      onPress={()=>{console.log("Learn More ")}}
+                      >
+                      <Text style={{color:"#FFD014",textDecorationLine:"underline"}}>Learn More ></Text> 
+                      </TouchableOpacity>
+                
+                
+                  </View>
+                )
+              }
 
   return (
     <ScrollView>
       <View style={styles.container}>
         {renderheader()}
         {renderAlert()}
+        {NoticeBOX()}
+        {/* {QuoteBOX()} */}
         {/* {renderAlert()} */}
         {/* {coinbox()} 
         {coinbox2()}
@@ -213,6 +248,17 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     paddingBottom: 130,
   },
+  shadow:{
+    shadowColor:"#000",
+    shadowOffset:{
+        width:0,
+        height:4
+    },
+    shadowOpacity:0.30,
+    shadowRadius:4.65,
+
+    elevation: 8
+},
   coinbox: {
     width: "90%",
     height: 100,
