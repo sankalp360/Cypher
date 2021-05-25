@@ -24,6 +24,8 @@ import dummyData from "../../config/data";
 
 import { Header } from 'react-native-elements';
 // import { Colors } from "react-native/Libraries/NewAppScreen";
+
+
 import icons from "../../config/icons";
 import SettingCard from "../../components/SettingCard";
 
@@ -63,7 +65,7 @@ const HomeScreen = () => {
            borderRadius:10,  
            backgroundColor:COLORS.white           
         }}
-        // onPress={()=> navigation.navigate('MarketScreen')}
+        // onPress={()=> navigation.navigate('MarketScreen')}  
       >
       
     {/* Currencies card */}
@@ -232,6 +234,7 @@ const HomeScreen = () => {
                     marginTop:SIZES.padding,
                     marginHorizontal:SIZES.padding,
                     padding:10,
+                    marginBottom:SIZES.padding,
                     backgroundColor:COLORS.white,
                     borderRadius:SIZES.radius,
                   }}>
@@ -256,13 +259,6 @@ const HomeScreen = () => {
         {renderAlert()}
         {NoticeBOX()}
         {TransactionBOX()}
-        {/* {renderAlert()} */}
-        {/* {coinbox()} 
-        {coinbox2()}
-        {coinbox()}
-        {coinbox2()}
-        {coinbox()}
-        {coinbox2()} */}
       </View>
     </ScrollView>
   );
