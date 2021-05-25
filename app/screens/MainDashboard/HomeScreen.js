@@ -25,6 +25,9 @@ import dummyData from "../../config/data";
 import { Header } from 'react-native-elements';
 // import { Colors } from "react-native/Libraries/NewAppScreen";
 import icons from "../../config/icons";
+import SettingCard from "../../components/SettingCard";
+
+import PriceAlert from "../../components/PriceAlert";
 
 const HomeScreen = () => {
   //   firebase gettoken function
@@ -60,6 +63,7 @@ const HomeScreen = () => {
            borderRadius:10,  
            backgroundColor:COLORS.white           
         }}
+        // onPress={()=> navigation.navigate('MarketScreen')}
       >
       
     {/* Currencies card */}
@@ -178,18 +182,82 @@ const HomeScreen = () => {
               // end of banner and header section
   
               // start of alert section
-              // function renderAlert(){
-              //   return(
-              //     // {PriceAlert()}
-              //   )
-              // }
+              function renderAlert(){
+                return(
+                  <PriceAlert />
+                )
+              }
+
+
+              // This is start of notice box function
+              function NoticeBOX()
+              {
+                return(
+                  <View
+                    style={{
+                     
+                      marginTop:SIZES.padding,
+                      marginHorizontal:SIZES.padding,
+                      padding:10,
+                      borderRadius:SIZES.radius,
+                      backgroundColor:COLORS.secondary,
+                      ...styles.shadow,
+                    }}
+                  >
+                      
+                      {/* create two text Componenet */}
+                      <Text style={{color:COLORS.white,...FONTS.h3,marginHorizontal:8}}>Investing Safety</Text>
+                      <Text style={{color:COLORS.white,marginTop:8,lineHeight:18,...FONTS.body4,marginHorizontal:8}}>It's very difficult to time Investment Espesially when market is volatile.Learn how to use currency cost averaging to your advantage.</Text>
+                
+                      {/* learn more button */}
+                      <TouchableOpacity 
+                      style={{
+                        marginTop:SIZES.base,
+                      }}
+                      onPress={()=>{console.log("Learn More ")}}
+                      >
+                      <Text style={{color:"#F0B0F0",textDecorationLine:"underline",marginHorizontal:8}}>Learn More ></Text> 
+                      </TouchableOpacity>
+                
+                
+                  </View>
+                )
+              }
+              //End of Notice Box
+              
+              function TransactionBOX(){
+                return(
+                  <View
+                    style={{
+                    marginTop:SIZES.padding,
+                    marginHorizontal:SIZES.padding,
+                    padding:10,
+                    backgroundColor:COLORS.white,
+                    borderRadius:SIZES.radius,
+                  }}>
+
+                                  
+                    
+                     <SettingCard
+                         icon="history"
+                         title="Transaction History"
+                         subtitle="All your transactions on Cypher"
+                    />               
+                    
+                  
+                  </View>
+                )
+              }
 
   return (
     <ScrollView>
       <View style={styles.container}>
         {renderheader()}
+        {renderAlert()}
+        {NoticeBOX()}
+        {TransactionBOX()}
         {/* {renderAlert()} */}
-        {/* {coinbox()}
+        {/* {coinbox()} 
         {coinbox2()}
         {coinbox()}
         {coinbox2()}
@@ -210,6 +278,17 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     paddingBottom: 130,
   },
+  shadow:{
+    shadowColor:"#000",
+    shadowOffset:{
+        width:0,
+        height:4
+    },
+    shadowOpacity:0.30,
+    shadowRadius:4.65,
+
+    elevation: 8
+},
   coinbox: {
     width: "90%",
     height: 100,
