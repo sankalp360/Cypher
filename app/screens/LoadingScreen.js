@@ -1,27 +1,28 @@
 import React from "react";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  Dimensions,
+} from "react-native";
 
-import firebase from "firebase";
+let ScreenHeight = Dimensions.get("window").height;
 
-export default function LoadingScreen({ navigation }) {
-  const componentDidMount = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      navigation.navigate(user ? "RootTabScreen" : "RootStackScreen");
-    });
-  };
-
+const LoadingScreen = () => {
   return (
-    <View>
-      <ActivityIndicator size="large" />
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#7F5DF0" />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 350,
   },
 });
+
+export default LoadingScreen;

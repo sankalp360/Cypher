@@ -6,9 +6,12 @@ import axios from "axios";
 import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
 import Coin from "../../components/Coin";
 
+import LoadingScreen from "../../screens/LoadingScreen";
+
 function MarketScreen() {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -17,6 +20,7 @@ function MarketScreen() {
       )
       .then((res) => {
         setCoins(res.data);
+        setLoading(false);
         //* console.log(res.data); -> debugging data coming from the server API
       })
       .catch((error) => console.log(error));
@@ -32,35 +36,44 @@ function MarketScreen() {
   });
 
   return (
-    <ScrollView data={coins} style={styles.container}>
-      <Text style={styles.marketHeading}>Market</Text>
-      <View style={styles.coinSearch}>
-        <TextInput
-          style={styles.textIn}
-          onChangeText={(val) => handleChange(val)}
-          placeholder="Search For A Currency.."
-        />
-        <MaterialCommunityIcons name="magnify" color="#444" size={27} />
-      </View>
-      {filteredCoins.map((coin) => {
-        return (
-          <Coin
-            key={coin.id}
-            name={coin.name}
-            image={coin.image}
-            symbol={coin.symbol}
-            price={coin.current_price}
-            priceChange={coin.price_change_percentage_24h}
-          />
-        );
-      })}
-    </ScrollView>
+    <View style={styles.cover}>
+      {loading ? (
+        <LoadingScreen />
+      ) : (
+        <ScrollView data={coins} style={styles.container}>
+          <Text style={styles.marketHeading}>Market</Text>
+          <View style={styles.coinSearch}>
+            <TextInput
+              style={styles.textIn}
+              onChangeText={(val) => handleChange(val)}
+              placeholder="Search For A Currency.."
+            />
+            <MaterialCommunityIcons name="magnify" color="#444" size={27} />
+          </View>
+          {filteredCoins.map((coin) => {
+            return (
+              <Coin
+                key={coin.id}
+                name={coin.name}
+                image={coin.image}
+                symbol={coin.symbol}
+                price={coin.current_price}
+                priceChange={coin.price_change_percentage_24h}
+              />
+            );
+          })}
+        </ScrollView>
+      )}
+    </View>
   );
 }
 
 export default MarketScreen;
 
 const styles = StyleSheet.create({
+  cover: {
+    flex: 1,
+  },
   container: {
     backgroundColor: "#f0f0f0",
     padding: 20,

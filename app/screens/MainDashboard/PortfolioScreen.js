@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Dimensions, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { LineChart } from "react-native-chart-kit";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -83,118 +90,122 @@ const PortfolioScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      {isWallet ? (
-        <ScrollView>
-          {wallet.walletId ? (
-            <Text style={styles.topText}>{wallet.name}</Text>
-          ) : null}
-          {wallet.walletId ? (
-            <Text style={styles.portfolioSubHeading}>
-              Your portfolio looks great today
-            </Text>
-          ) : (
-            <View>
-              <Text style={styles.hiddenText}>Just One More Step</Text>
-              <TouchableOpacity
-                style={styles.cryptoAccess}
-                onPress={handleCryptoAccess}
-              >
-                <Text style={styles.cryptoAccessText}>
-                  Crypto Access Request
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
-          {wallet.walletId ? (
-            <LinearGradient
-              // colors={["#7F5DF0", "#513C98"]}
-              colors={["#FFF", "#FFF"]}
-              style={styles.portfolioHero}
-            >
-              <LineChart
-                data={{
-                  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-                  datasets: [
-                    {
-                      data: [0, 0, 72, 65, 78, 80],
-                    },
-                  ],
-                }}
-                width={Dimensions.get("window").width * 0.8} // from react-native
-                height={180}
-                yAxisLabel="$"
-                yAxisSuffix="k"
-                yAxisInterval={1} // optional, defaults to 1
-                chartConfig={{
-                  backgroundColor: "#7F5DF0",
-                  backgroundGradientFrom: "#7F5DF0",
-                  backgroundGradientTo: "#513C98",
-                  decimalPlaces: 2, // optional, defaults to 2dp
-                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                  labelColor: (opacity = 1) =>
-                    `rgba(255, 255, 255, ${opacity})`,
-                  style: {
-                    borderRadius: 10,
-                  },
-                  propsForDots: {
-                    r: "2",
-                    strokeWidth: "1",
-                    stroke: "#ffa726",
-                  },
-                }}
-                bezier
-                style={{
-                  marginVertical: -10,
-                  borderRadius: 10,
-                }}
-              />
-              <View style={styles.textHolder}>
-                <View style={styles.mainTextHolder}>
-                  <Text style={styles.portfolioHeroHeading}>
-                    Portfolio Value
+    <View style={styles.container}>
+      <ImageBackground
+        source={require("../../assets/images/Add_Wallet_Screen_Background.png")}
+        style={styles.background}
+      >
+        {isWallet ? (
+          <ScrollView>
+            {wallet.walletId ? (
+              <Text style={styles.topText}>{wallet.name}</Text>
+            ) : null}
+            {wallet.walletId ? (
+              <Text style={styles.portfolioSubHeading}>
+                Your portfolio looks great today
+              </Text>
+            ) : (
+              <View>
+                <Text style={styles.hiddenText}>Just One More Step</Text>
+                <TouchableOpacity
+                  style={styles.cryptoAccess}
+                  onPress={handleCryptoAccess}
+                >
+                  <Text style={styles.cryptoAccessText}>
+                    Crypto Access Request
                   </Text>
-                </View>
-                <View style={styles.secondaryTextHolder}>
-                  {/* <Text style={styles.portfolioInvested}>Profit</Text>
-            <Text style={styles.portfolioInvestedValue}>18.55%</Text> */}
-                  <Text style={styles.portfolioWorth}>$80,000</Text>
-                  <MaterialCommunityIcons
-                    name="chevron-up"
-                    color="green"
-                    size={30}
-                  />
-                  <Text style={styles.portfolioInvestedValue}>18.55%</Text>
-                </View>
+                </TouchableOpacity>
               </View>
-            </LinearGradient>
-          ) : null}
-          {wallet.walletId ? (
-            <Text style={styles.assets}>Your Assets</Text>
-          ) : null}
-          {wallet.walletId ? (
-            <AssetCard
-              icon="bitcoin"
-              name="Bitcoin"
-              symbol="BTC"
-              worth="$70,000"
-              change="10.25%"
-              changeColor="green"
-              iconName="chevron-up"
-            />
-          ) : null}
-          {wallet.walletId ? (
-            <AssetCard
-              icon="ethereum"
-              name="Ethereum"
-              symbol="ETH"
-              worth="$10,000"
-              change="2.65%"
-              changeColor="red"
-              iconName="chevron-down"
-            />
-          ) : null}
-          {/* <TouchableOpacity style={styles.moreAssets}>
+            )}
+            {wallet.walletId ? (
+              <LinearGradient
+                // colors={["#7F5DF0", "#513C98"]}
+                colors={["#FFF", "#FFF"]}
+                style={styles.portfolioHero}
+              >
+                <LineChart
+                  data={{
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+                    datasets: [
+                      {
+                        data: [0, 0, 72, 65, 78, 80],
+                      },
+                    ],
+                  }}
+                  width={Dimensions.get("window").width * 0.8} // from react-native
+                  height={180}
+                  yAxisLabel="$"
+                  yAxisSuffix="k"
+                  yAxisInterval={1} // optional, defaults to 1
+                  chartConfig={{
+                    backgroundColor: "#7F5DF0",
+                    backgroundGradientFrom: "#7F5DF0",
+                    backgroundGradientTo: "#513C98",
+                    decimalPlaces: 2, // optional, defaults to 2dp
+                    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                    labelColor: (opacity = 1) =>
+                      `rgba(255, 255, 255, ${opacity})`,
+                    style: {
+                      borderRadius: 10,
+                    },
+                    propsForDots: {
+                      r: "2",
+                      strokeWidth: "1",
+                      stroke: "#ffa726",
+                    },
+                  }}
+                  bezier
+                  style={{
+                    marginVertical: -10,
+                    borderRadius: 10,
+                  }}
+                />
+                <View style={styles.textHolder}>
+                  <View style={styles.mainTextHolder}>
+                    <Text style={styles.portfolioHeroHeading}>
+                      Portfolio Value
+                    </Text>
+                  </View>
+                  <View style={styles.secondaryTextHolder}>
+                    {/* <Text style={styles.portfolioInvested}>Profit</Text>
+            <Text style={styles.portfolioInvestedValue}>18.55%</Text> */}
+                    <Text style={styles.portfolioWorth}>$80,000</Text>
+                    <MaterialCommunityIcons
+                      name="chevron-up"
+                      color="green"
+                      size={30}
+                    />
+                    <Text style={styles.portfolioInvestedValue}>18.55%</Text>
+                  </View>
+                </View>
+              </LinearGradient>
+            ) : null}
+            {wallet.walletId ? (
+              <Text style={styles.assets}>Your Assets</Text>
+            ) : null}
+            {wallet.walletId ? (
+              <AssetCard
+                icon="bitcoin"
+                name="Bitcoin"
+                symbol="BTC"
+                worth="$70,000"
+                change="10.25%"
+                changeColor="green"
+                iconName="chevron-up"
+              />
+            ) : null}
+            {/* {wallet.walletId ? (
+              <AssetCard
+                icon="ethereum"
+                name="Ethereum"
+                symbol="ETH"
+                worth="$10,000"
+                change="2.65%"
+                changeColor="red"
+                iconName="chevron-down"
+              />
+            ) : null} */}
+            {/* <TouchableOpacity style={styles.moreAssets}>
             <Text style={styles.moreAssetsText}>More Assets</Text>
             <MaterialCommunityIcons
               name="chevron-right"
@@ -202,18 +213,19 @@ const PortfolioScreen = () => {
               size={20}
             />
           </TouchableOpacity> */}
-          {wallet.walletId ? (
-            <TouchableOpacity onPress={handleDelete} title="Delete Wallet">
-              <View style={styles.deleteWalletBtn}>
-                <Text style={styles.deleteWalletText}>Delete Wallet</Text>
-              </View>
-            </TouchableOpacity>
-          ) : null}
-        </ScrollView>
-      ) : (
-        <NewWallet uid={uid} isWallet={handleWallet} />
-      )}
-    </ScrollView>
+            {wallet.walletId ? (
+              <TouchableOpacity onPress={handleDelete} title="Delete Wallet">
+                <View style={styles.deleteWalletBtn}>
+                  <Text style={styles.deleteWalletText}>Delete Wallet</Text>
+                </View>
+              </TouchableOpacity>
+            ) : null}
+          </ScrollView>
+        ) : (
+          <NewWallet uid={uid} isWallet={handleWallet} />
+        )}
+      </ImageBackground>
+    </View>
   );
 };
 
@@ -222,6 +234,11 @@ export default PortfolioScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f0f0f0",
+  },
+  background: {
+    flex: 1,
+    resizeMode: "cover",
     backgroundColor: "#f0f0f0",
     padding: 20,
   },
@@ -333,8 +350,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   deleteWalletBtn: {
-    borderColor: "#C0C0C0",
+    borderColor: "#DC143C",
     borderWidth: 1.2,
+    backgroundColor: "#fff",
     width: "85%",
     alignItems: "center",
     justifyContent: "center",

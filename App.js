@@ -6,8 +6,8 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 
+import { createStackNavigator } from "@react-navigation/stack";
 import LoadingScreen from "./app/screens/LoadingScreen";
 
 import RootTabScreen from "./app/screens/RootTabScreen";

@@ -6,7 +6,11 @@ import {
   TextInput,
   LogBox,
   TouchableOpacity,
+  ImageBackground,
+  ScrollView,
 } from "react-native";
+
+const backImage = "../assets/images/Add_Wallet_Screen_Background.png";
 
 import { db, fireauth } from "../config/firebase";
 
@@ -57,7 +61,7 @@ const NewWallet = ({ uid, isWallet }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.upper}>
         <Text style={styles.upperText}>You do not have a wallet</Text>
         <Text style={styles.upperText}>Create a Wallet !</Text>
@@ -89,7 +93,7 @@ const NewWallet = ({ uid, isWallet }) => {
           <Text style={styles.buttonText}>Create Wallet</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -98,8 +102,10 @@ export default NewWallet;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
+    height: 650,
+    paddingVertical: 50,
     marginTop: 40,
+    backgroundColor: "transparent",
   },
   upper: {
     flex: 1,
