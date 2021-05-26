@@ -1,18 +1,25 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { COLORS } from "../config/theme";
 
 const SettingCard = ({ icon, title, subtitle }) => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View style={styles.icon}>
-        <MaterialCommunityIcons name={icon} color="#7F5DF0" size={30} />
+        <MaterialCommunityIcons
+          name={icon}
+          color={COLORS.secondary}
+          size={30}
+        />
       </View>
       <View>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

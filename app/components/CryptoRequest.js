@@ -5,6 +5,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { db, fireauth } from "../config/firebase";
 
+import { COLORS } from "../config/theme";
+
 const CryptoRequest = () => {
   const [wallet, setWallet] = useState({
     walletId: "",
@@ -63,7 +65,8 @@ const CryptoRequest = () => {
       <View style={styles.background}>
         {isSet ? (
           <View>
-            <Text style={styles.hiddenText}>Congratulations!</Text>
+            <Text style={styles.hiddenText}>Congratulations 🎉</Text>
+            <Text style={styles.hiddenText2}>🥳</Text>
             <TouchableOpacity
               style={styles.cryptoAccess}
               onPress={handleWallet}
@@ -75,13 +78,16 @@ const CryptoRequest = () => {
         ) : (
           <View>
             <Text style={styles.hiddenText}>Just One More Step</Text>
+            <Text style={styles.hiddenText2}>👇</Text>
             <TouchableOpacity
               style={styles.cryptoAccess}
               onPress={handleCryptoAccess}
             >
               <Text style={styles.cryptoAccessText}>Crypto Access Request</Text>
             </TouchableOpacity>
-            {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
+            {loader ? (
+              <ActivityIndicator size="large" color={COLORS.secondary} />
+            ) : null}
           </View>
         )}
       </View>
@@ -105,16 +111,20 @@ const styles = StyleSheet.create({
     marginTop: 250,
     textAlign: "center",
   },
+  hiddenText2: {
+    fontSize: 30,
+    marginTop: 10,
+    textAlign: "center",
+  },
   cryptoAccess: {
     width: "100%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#513C98",
-    marginVertical: 100,
-    backgroundColor: "#7F5DF0",
+    borderRadius: 8,
+    elevation: 8,
+    marginVertical: 30,
+    backgroundColor: COLORS.secondary,
   },
   cryptoAccessText: {
     fontWeight: "bold",

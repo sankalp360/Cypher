@@ -29,6 +29,8 @@ const SignupScreen = ({ navigation }) => {
     isValidEmail: true,
   });
 
+  const [loader, setLoader] = useState(false);
+
   const textInputChange = (val) => {
     if (val.length === 0) {
       setData({
@@ -74,6 +76,7 @@ const SignupScreen = ({ navigation }) => {
   };
 
   const handleSignup = () => {
+    setLoader(true);
     let email = data.email;
     let password = data.password;
     fireapp
@@ -90,6 +93,7 @@ const SignupScreen = ({ navigation }) => {
         <Text style={styles.text_header}>Register Now</Text>
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+        {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
           <MaterialCommunityIcons name="email" color="#05375a" size={20} />
