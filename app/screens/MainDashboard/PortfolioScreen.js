@@ -114,18 +114,17 @@ const PortfolioScreen = () => {
         UserId: wallet.walletId,
         TransferAmmount: parseInt(money),
       })
-      .then(() => {
-        setMoney("");
-        setLoader(false);
-      })
-      .then((res) => {
-        console.log(res.data);
-        setStatus(res.data.status1);
-        setTimeout(() => {
-          setStatus(false);
-        }, 15000);
-      })
-      .catch((err) => console.log("error: " + err));
+      .catch((err) => {
+        console.log("error: " + err.response.status);
+        if (err.response.status == 503) {
+          setMoney("");
+          setLoader(false);
+          setStatus(true);
+          setTimeout(() => {
+            setStatus(false);
+          }, 5000);
+        }
+      });
   }
 
   function handleDelete() {
