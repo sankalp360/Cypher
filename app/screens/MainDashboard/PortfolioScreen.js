@@ -223,7 +223,7 @@ const PortfolioScreen = () => {
                       <Text style={styles.portfolioInvestedValue}>10.25%</Text>
                     </View>
                   ) : (
-                    <View>
+                    <View style={styles.revealContainer}>
                       <TouchableOpacity
                         style={styles.revealBox}
                         onPress={revealWallet}
@@ -231,7 +231,10 @@ const PortfolioScreen = () => {
                         <Text style={styles.revealTxt}>Reveal</Text>
                       </TouchableOpacity>
                       {moneyLoader ? (
-                        <ActivityIndicator size="large" color="#7F5DF0" />
+                        <ActivityIndicator
+                          size="small"
+                          color={COLORS.primary}
+                        />
                       ) : null}
                     </View>
                   )}
@@ -434,5 +437,22 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
     fontSize: 15,
     fontWeight: "bold",
+  },
+  revealContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  revealBox: {
+    backgroundColor: COLORS.secondary,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 4,
+    marginRight: 10,
+  },
+  revealTxt: {
+    color: COLORS.white,
   },
 });
