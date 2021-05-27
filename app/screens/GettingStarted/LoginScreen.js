@@ -1,16 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Dimensions,
-  Image,
   TouchableOpacity,
   Platform,
   TextInput,
   StatusBar,
-  Alert,
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
@@ -18,9 +14,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import * as Animatable from "react-native-animatable";
 
 import fireapp from "../../config/firebase";
+import { ActivityIndicator } from "react-native";
 
 const LoginScreen = ({ navigation }) => {
-  const [data, setData] = React.useState({
+  const [data, setData] = useState({
     email: "",
     password: "",
     check_textInputChange: false,
@@ -28,6 +25,8 @@ const LoginScreen = ({ navigation }) => {
     isValidEmail: true,
     isValidPassword: true,
   });
+
+  const [loader, setLoader] = useState(false);
 
   const textInputChange = (val) => {
     if (val.length === 0) {
@@ -60,6 +59,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const handleLogin = () => {
+    setLoader(true);
     let email = data.email;
     let password = data.password;
     try {
@@ -68,8 +68,8 @@ const LoginScreen = ({ navigation }) => {
         .signInWithEmailAndPassword(email, password)
         .then(() => navigation.navigate("Dashboard"))
         .catch((error) => {
-          setData({ ...data, isValidEmail: false, isValidPassword: false})
-          })
+          setData({ ...data, isValidEmail: false, isValidPassword: false });
+        });
     } catch (err) {
       alert("Error : ", err);
     }
@@ -82,6 +82,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.text_header}>Welcome!!</Text>
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+        {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
           <MaterialCommunityIcons name="email" color="#05375a" size={20} />

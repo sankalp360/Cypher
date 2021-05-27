@@ -42,13 +42,13 @@ function RootTabScreen() {
             <View style={styles.IconView}>
               <MaterialCommunityIcons
                 name="home"
-                color={focused ? COLORS.primary : COLORS.black}
+                color={focused ? COLORS.secondary : COLORS.black}
                 size={30}
               />
 
               <Text
                 style={{
-                  color: focused ? COLORS.primary : COLORS.black,
+                  color: focused ? COLORS.secondary : COLORS.black,
                   ...FONTS.body5,
                 }}
               >
@@ -67,13 +67,13 @@ function RootTabScreen() {
             <View style={styles.IconView}>
               <MaterialCommunityIcons
                 name="account"
-                color={focused ? COLORS.primary : COLORS.black}
+                color={focused ? COLORS.secondary : COLORS.black}
                 size={30}
               />
 
               <Text
                 style={{
-                  color: focused ? COLORS.primary : COLORS.black,
+                  color: focused ? COLORS.secondary : COLORS.black,
                   ...FONTS.body5,
                 }}
               >
@@ -108,12 +108,12 @@ function RootTabScreen() {
             <View style={styles.IconView}>
               <MaterialCommunityIcons
                 name="arrow-top-right"
-                color={focused ? COLORS.primary : COLORS.black}
+                color={focused ? COLORS.secondary : COLORS.black}
                 size={30}
               />
               <Text
                 style={{
-                  color: focused ? COLORS.primary : COLORS.black,
+                  color: focused ? COLORS.secondary : COLORS.black,
                   ...FONTS.body5,
                 }}
               >
@@ -133,12 +133,12 @@ function RootTabScreen() {
               <View style={styles.IconView}>
                 <MaterialCommunityIcons
                   name="cog"
-                  color={focused ? COLORS.primary : COLORS.black}
+                  color={focused ? COLORS.secondary : COLORS.black}
                   size={30}
                 />
                 <Text
                   style={{
-                    color: focused ? COLORS.primary : COLORS.black,
+                    color: focused ? COLORS.secondary : COLORS.black,
                     ...FONTS.body5,
                   }}
                 >
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 60,
     width: 60,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.secondary,
     borderRadius: 50,
   },
 });

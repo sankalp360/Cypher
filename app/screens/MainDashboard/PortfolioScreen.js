@@ -1,3 +1,4 @@
+//! Basic Dependencies
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -6,15 +7,27 @@ import {
   Dimensions,
   ScrollView,
   ImageBackground,
+  TouchableOpacity,
+  TextInput,
+  ActivityIndicator,
 } from "react-native";
+
+//! Extra Dependencies
 import { LinearGradient } from "expo-linear-gradient";
 import { LineChart } from "react-native-chart-kit";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import axios from "axios";
+
+//! Configurations
+import { db, fireauth } from "../../config/firebase";
+import { COLORS } from "../../config/theme";
+
+//! Components
 import AssetCard from "../../components/AssetCard";
 import NewWallet from "../../components/NewWallet";
-
-import { db, fireauth } from "../../config/firebase";
+import CryptoRequest from "../../components/CryptoRequest";
+import DeleteWallet from "../../components/DeleteWallet";
+import RequestFromBank from "../../components/RequestFromBank";
 
 const PortfolioScreen = () => {
   const [wallet, setWallet] = useState({
@@ -22,58 +35,130 @@ const PortfolioScreen = () => {
     phone: "",
     country: "",
     walletId: "",
+    privateKey: "",
+  }); //*
+
+  const [amount, setAmount] = useState(""); //*
+  const [isWallet, setIsWallet] = useState(false); //*
+  const [uid, setUid] = useState("ini"); //*
+  const [reveal, setReveal] = useState(false); //*
+  const [loader, setLoader] = useState(false);
+  const [moneyLoader, setMoneyLoader] = useState(false);
+  const [money, setMoney] = useState("");
+  const [disable, setDisable] = useState(false);
+  const [bank, setBank] = useState({
+    status: false,
+    text: "",
   });
-
-  const [isWallet, setIsWallet] = useState(false);
-
-  const [uid, setUid] = useState("ini");
 
   fireauth.onAuthStateChanged((user) => {
     if (user) {
       setUid(user.uid);
     }
-  });
+  }); //*
 
   useEffect(() => {
-    let docRef = db.collection("wallets").doc(uid);
+    let docRef = db.collection("wallets").doc(uid); //* Setting Reference variable for the Firestore wallet document associated with the User account.
     docRef
       .get()
       .then((doc) => {
         if (doc.exists) {
-          setIsWallet(true);
+          setIsWallet(true); //* If Doc Exists Display Portfolio Screen with User Data
           setWallet({
             name: doc.data().name,
             phone: doc.data().phone,
             country: doc.data().country,
             walletId: doc.data().walletId,
-          });
+            privateKey: doc.data().privateKey,
+          }); //* fetching the remote User Wallet data and setting it into the Local State.
         } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
+          console.log("No such document!"); //* doc.data() will be undefined in this case
         }
       })
       .catch((error) => {
         console.log("Error getting document:", error);
       });
-  }, [uid, isWallet, wallet]);
+  }, [uid, isWallet, wallet]); //* Runs always on these state changes.
 
-  function handleWallet(childData) {
-    setIsWallet(childData);
-  }
-
-  function handleCryptoAccess() {
-    db.collection("wallets")
-      .doc(uid)
-      .set({
-        name: wallet.name,
-        phone: wallet.phone,
-        country: wallet.country,
-        walletId: "0xcd319e22dbc4b55492002d4b116d00d5f6072a61",
+  function revealWallet() {
+    setDisable(true);
+    setMoneyLoader(true);
+    axios
+      .get(
+        `https://cypher-advanced-wallet.herokuapp.com/getUserDetails/${wallet.walletId}`
+      )
+      .then((res) => {
+        setAmount(res.data.UserBalance);
+        //console.log(res.data); //-> debugging data coming from the server API
       })
       .then(() => {
-        console.log("document written");
+        setReveal(true);
+        setMoneyLoader(false);
       })
-      .catch((err) => console.log(err.message));
+      .then(() => {
+        setTimeout(() => {
+          setReveal(false);
+          setAmount("");
+          setDisable(false);
+        }, 8000);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  function handleWallet(childData) {
+    setIsWallet(childData); //*
+  } //*
+
+  const handleMoneyChange = (val) => {
+    setMoney(val);
+    console.log(val);
+  };
+
+  function handleRequestFromBank() {
+    setDisable(true);
+    setLoader(true);
+    setMoney("");
+    axios
+      .post(`https://cypher-advanced-wallet.herokuapp.com/transferFromBank`, {
+        UserId: wallet.walletId,
+        TransferAmmount: parseInt(money),
+      })
+      .then(() => {
+        setLoader(false);
+        setBank({
+          status: true,
+          text: "Money Received 🤑",
+        });
+        setTimeout(() => {
+          setBank({
+            status: false,
+            text: "",
+          });
+          setDisable(false);
+        }, 5000);
+      })
+      .catch((err) => {
+        console.log("error: " + err);
+        setLoader(false);
+        if (err.response.status == 503) {
+          setBank({
+            status: true,
+            text: "Money Received 🤑",
+          });
+        } else {
+          setBank({
+            status: true,
+            text: "Transaction Failed 🥺",
+          });
+        }
+        setTimeout(() => {
+          setBank({
+            status: false,
+            text: "",
+          });
+          setDisable(false);
+        }, 5000);
+      });
   }
 
   function handleDelete() {
@@ -96,26 +181,18 @@ const PortfolioScreen = () => {
         style={styles.background}
       >
         {isWallet ? (
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
             {wallet.walletId ? (
-              <Text style={styles.topText}>{wallet.name}</Text>
+              <Text style={styles.topText}>
+                Hi 👋 {wallet.name.split(" ")[0]}
+              </Text>
             ) : null}
             {wallet.walletId ? (
               <Text style={styles.portfolioSubHeading}>
                 Your portfolio looks great today
               </Text>
             ) : (
-              <View>
-                <Text style={styles.hiddenText}>Just One More Step</Text>
-                <TouchableOpacity
-                  style={styles.cryptoAccess}
-                  onPress={handleCryptoAccess}
-                >
-                  <Text style={styles.cryptoAccessText}>
-                    Crypto Access Request
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <CryptoRequest />
             )}
             {wallet.walletId ? (
               <LinearGradient
@@ -134,7 +211,7 @@ const PortfolioScreen = () => {
                   }}
                   width={Dimensions.get("window").width * 0.8} // from react-native
                   height={180}
-                  yAxisLabel="$"
+                  yAxisLabel="₹"
                   yAxisSuffix="k"
                   yAxisInterval={1} // optional, defaults to 1
                   chartConfig={{
@@ -166,17 +243,35 @@ const PortfolioScreen = () => {
                       Portfolio Value
                     </Text>
                   </View>
-                  <View style={styles.secondaryTextHolder}>
-                    {/* <Text style={styles.portfolioInvested}>Profit</Text>
-            <Text style={styles.portfolioInvestedValue}>18.55%</Text> */}
-                    <Text style={styles.portfolioWorth}>$80,000</Text>
-                    <MaterialCommunityIcons
-                      name="chevron-up"
-                      color="green"
-                      size={30}
-                    />
-                    <Text style={styles.portfolioInvestedValue}>18.55%</Text>
-                  </View>
+                  {reveal ? (
+                    <View style={styles.secondaryTextHolder}>
+                      <Text style={styles.portfolioWorth}>
+                        ₹{parseInt(amount) * 1}
+                      </Text>
+                      <MaterialCommunityIcons
+                        name="chevron-up"
+                        color="green"
+                        size={30}
+                      />
+                      <Text style={styles.portfolioInvestedValue}>10.25%</Text>
+                    </View>
+                  ) : (
+                    <View style={styles.revealContainer}>
+                      <TouchableOpacity
+                        disabled={disable}
+                        style={styles.revealBox}
+                        onPress={revealWallet}
+                      >
+                        <Text style={styles.revealTxt}>Reveal</Text>
+                      </TouchableOpacity>
+                      {moneyLoader ? (
+                        <ActivityIndicator
+                          size="small"
+                          color={COLORS.primary}
+                        />
+                      ) : null}
+                    </View>
+                  )}
                 </View>
               </LinearGradient>
             ) : null}
@@ -185,41 +280,48 @@ const PortfolioScreen = () => {
             ) : null}
             {wallet.walletId ? (
               <AssetCard
-                icon="bitcoin"
-                name="Bitcoin"
-                symbol="BTC"
-                worth="$70,000"
-                change="10.25%"
-                changeColor="green"
+                icon="alpha-c-circle"
+                name="Cypher"
+                symbol="CYP"
+                change={amount}
+                worth={amount}
+                changeColor="grey"
                 iconName="chevron-up"
               />
             ) : null}
-            {/* {wallet.walletId ? (
-              <AssetCard
-                icon="ethereum"
-                name="Ethereum"
-                symbol="ETH"
-                worth="$10,000"
-                change="2.65%"
-                changeColor="red"
-                iconName="chevron-down"
-              />
-            ) : null} */}
-            {/* <TouchableOpacity style={styles.moreAssets}>
-            <Text style={styles.moreAssetsText}>More Assets</Text>
-            <MaterialCommunityIcons
-              name="chevron-right"
-              color="#513C98"
-              size={20}
-            />
-          </TouchableOpacity> */}
             {wallet.walletId ? (
-              <TouchableOpacity onPress={handleDelete} title="Delete Wallet">
-                <View style={styles.deleteWalletBtn}>
-                  <Text style={styles.deleteWalletText}>Delete Wallet</Text>
-                </View>
-              </TouchableOpacity>
+              <Text style={styles.assets}>Request CYP from Bank</Text>
             ) : null}
+            {wallet.walletId ? (
+              <View style={styles.rcontainer}>
+                {bank.status ? (
+                  <Text style={styles.rsuccessTxt}>{bank.text}</Text>
+                ) : null}
+                {loader ? (
+                  <ActivityIndicator size="large" color="#7F5DF0" />
+                ) : null}
+                <View style={styles.raction}>
+                  <TextInput
+                    onChangeText={(val) => handleMoneyChange(val)}
+                    placeholder="Amount in CYP"
+                    style={styles.rtextInput}
+                    value={money}
+                  />
+                </View>
+                <TouchableOpacity
+                  disabled={disable}
+                  style={styles.rbutton}
+                  onPress={handleRequestFromBank}
+                >
+                  <Text style={styles.rbuttonTxt}>Request CYP</Text>
+                </TouchableOpacity>
+              </View>
+            ) : null}
+            {/* {wallet.walletId ? (
+              <TouchableOpacity onPress={handleDelete} title="Delete Wallet">
+                <DeleteWallet />
+              </TouchableOpacity>
+            ) : null} */}
           </ScrollView>
         ) : (
           <NewWallet uid={uid} isWallet={handleWallet} />
@@ -240,7 +342,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     backgroundColor: "#f0f0f0",
-    padding: 20,
+    paddingHorizontal: 20,
   },
   portfolioHeading: {
     marginTop: 20,
@@ -249,29 +351,9 @@ const styles = StyleSheet.create({
   },
   topText: {
     fontSize: 30,
-    marginTop: 30,
+    marginTop: 40,
     color: "black",
     fontWeight: "bold",
-  },
-  hiddenText: {
-    fontSize: 30,
-    marginTop: 250,
-    textAlign: "center",
-  },
-  cryptoAccess: {
-    width: "100%",
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#513C98",
-    marginVertical: 100,
-    backgroundColor: "#7F5DF0",
-  },
-  cryptoAccessText: {
-    fontWeight: "bold",
-    color: "#fff",
   },
   portfolioSubHeading: {
     fontSize: 16,
@@ -349,21 +431,63 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 15,
   },
-  deleteWalletBtn: {
-    borderColor: "#DC143C",
-    borderWidth: 1.2,
-    backgroundColor: "#fff",
-    width: "85%",
-    alignItems: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    marginTop: 15,
-    borderRadius: 10,
-    padding: 24,
+  rcontainer: {
+    flex: 1,
   },
-  deleteWalletText: {
-    fontSize: 16.2,
+  raction: {
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#513C98",
+    borderWidth: 1,
+    borderRadius: 10,
+    marginBottom: 8,
+    backgroundColor: COLORS.white,
+  },
+  rtextInput: {
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: 20,
+    fontSize: 15,
+    color: "#513C98",
+  },
+  rbutton: {
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    elevation: 8,
+    marginTop: 15,
+    marginBottom: 40,
+    backgroundColor: COLORS.secondary,
+  },
+  rbuttonTxt: {
+    color: COLORS.white,
+  },
+  rsuccessTxt: {
+    marginBottom: 10,
+    textAlign: "center",
+    color: COLORS.secondary,
+    fontSize: 15,
     fontWeight: "bold",
-    color: "#DC143C",
+  },
+  revealContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  revealBox: {
+    backgroundColor: COLORS.secondary,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 4,
+    marginRight: 10,
+  },
+  revealTxt: {
+    color: COLORS.white,
   },
 });

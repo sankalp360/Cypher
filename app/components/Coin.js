@@ -1,11 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 const Coin = ({ name, image, symbol, price, priceChange }) => {
   let firstName = name.split(" ");
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View style={styles.coinRow}>
         <Image
           resizeMode="contain"
@@ -29,7 +29,7 @@ const Coin = ({ name, image, symbol, price, priceChange }) => {
           )}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

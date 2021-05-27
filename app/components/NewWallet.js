@@ -6,13 +6,15 @@ import {
   TextInput,
   LogBox,
   TouchableOpacity,
-  ImageBackground,
   ScrollView,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
-const backImage = "../assets/images/Add_Wallet_Screen_Background.png";
+import * as Animatable from "react-native-animatable";
 
-import { db, fireauth } from "../config/firebase";
+import { COLORS, SIZES, FONTS } from "../config/theme";
+
+import { db } from "../config/firebase";
 
 LogBox.ignoreLogs(["Setting a timer"]);
 
@@ -52,6 +54,7 @@ const NewWallet = ({ uid, isWallet }) => {
         phone: wallet.phone,
         country: wallet.country,
         walletId: "",
+        privateKey: "",
       })
       .then(() => {
         isWallet(true);
@@ -61,40 +64,112 @@ const NewWallet = ({ uid, isWallet }) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.upper}>
-        <Text style={styles.upperText}>You do not have a wallet</Text>
-        <Text style={styles.upperText}>Create a Wallet !</Text>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.text_header}>You don't Have a Wallet</Text>
+        <Text style={styles.text_header}>Create A Wallet 👇</Text>
       </View>
-      <View style={styles.createBox}>
-        <Text style={styles.boxHead}>Create New Wallet</Text>
+
+      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+        {/* Headtext start*/}
+        <View style={{ marginVertical: 12 }}>
+          <Text
+            style={{
+              textAlign: "center",
+              color: COLORS.secondary,
+              fontWeight: "bold",
+              fontSize: 25,
+            }}
+          >
+            Create New Wallet
+          </Text>
+        </View>
+        {/* headtext end  */}
+
         <View style={styles.action}>
           <TextInput
             onChangeText={(val) => handleNameChange(val)}
             placeholder="Name"
             style={styles.textInput}
-          />
+          ></TextInput>
         </View>
+        {/* End of Amount Input feild */}
+
+        {/* Start of hash adrress input feild */}
         <View style={styles.action}>
           <TextInput
             onChangeText={(val) => handleMobileChange(val)}
-            placeholder="Mobile"
+            placeholder="Phone"
             style={styles.textInput}
-          />
+            keyboardType="phone-pad"
+          ></TextInput>
         </View>
+        {/* end of hash adrress input feild */}
+
+        {/* Start of hash adrress input feild */}
         <View style={styles.action}>
           <TextInput
             onChangeText={(val) => handleCountryChange(val)}
             placeholder="Country"
             style={styles.textInput}
-          />
+          ></TextInput>
         </View>
-        <TouchableOpacity style={styles.button} onPress={() => createWallet()}>
-          <Text style={styles.buttonText}>Create Wallet</Text>
+        {/* end of hash adrress input feild */}
+
+        {/* start of button send */}
+        <TouchableOpacity
+          style={styles.transact}
+          onPress={() => createWallet()}
+        >
+          <Text
+            style={{ color: COLORS.white, fontSize: 18, textAlign: "center" }}
+          >
+            CREATE
+          </Text>
         </TouchableOpacity>
-      </View>
-    </ScrollView>
+        {/* end of button */}
+      </Animatable.View>
+    </View>
   );
+
+  // return (
+  //   <ScrollView style={styles.container}>
+  //     <View style={styles.upper}>
+  //       <Text style={styles.upperText}>You do not have a wallet</Text>
+  //       <Text style={styles.upperText}>Create a Wallet !</Text>
+  //     </View>
+  //     <View style={styles.createBox}>
+  //       <Text style={styles.boxHead}>Create New Wallet</Text>
+  //       <View style={styles.action}>
+  //         <TextInput
+  //           onChangeText={(val) => handleNameChange(val)}
+  //           placeholder="Name"
+  //           style={styles.textInput}
+  //         />
+  //       </View>
+  //       <View style={styles.action}>
+  //         <TextInput
+  //           onChangeText={(val) => handleMobileChange(val)}
+  //           placeholder="Mobile"
+  //           style={styles.textInput}
+  //           keyboardType="phone-pad"
+  //         />
+  //       </View>
+  //       <View style={styles.action}>
+  //         <TextInput
+  //           onChangeText={(val) => handleCountryChange(val)}
+  //           placeholder="Country"
+  //           style={styles.textInput}
+  //         />
+  //       </View>
+  //       <TouchableOpacity style={styles.button} onPress={() => createWallet()}>
+  //         <LinearGradient colors={["#7F5DF0", "#513C98"]} style={styles.button}>
+  //           <Text style={styles.buttonText}>Create Wallet</Text>
+  //         </LinearGradient>
+  //       </TouchableOpacity>
+  //     </View>
+  //   </ScrollView>
+  // );
 };
 
 export default NewWallet;
@@ -103,9 +178,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: 650,
-    paddingVertical: 50,
-    marginTop: 40,
-    backgroundColor: "transparent",
+    backgroundColor: COLORS.secondary,
+    margin: -20,
+  },
+  header: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+    paddingBottom: 50,
+  },
+  footer: {
+    flex: 3,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    marginHorizontal: 10,
+  },
+  text_header: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 20,
+    textAlign: "center",
+  },
+  text_footer: {
+    marginTop: 8,
+    color: "#05375a",
+    fontSize: 18,
   },
   upper: {
     flex: 1,
@@ -148,8 +248,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#513C98",
     marginVertical: 8,
     backgroundColor: "#7F5DF0",
   },
@@ -163,5 +261,70 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 15,
     color: "#513C98",
+  },
+  action: {
+    flexDirection: "row",
+    marginTop: 40,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f2f2f2",
+    paddingBottom: 5,
+  },
+  actionError: {
+    flexDirection: "row",
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#FF0000",
+    paddingBottom: 5,
+  },
+  textInput: {
+    flex: 1,
+    paddingLeft: 15,
+    color: "#05375a",
+    textAlign: "left",
+    fontSize: 15,
+  },
+  transact: {
+    backgroundColor: COLORS.secondary,
+    marginVertical: 40,
+    marginTop: SIZES.padding,
+    marginHorizontal: 4,
+    padding: 12,
+    borderRadius: SIZES.radius - 5,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+
+    elevation: 8,
+  },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+
+    elevation: 8,
+  },
+  button: {
+    alignItems: "center",
+    marginTop: 50,
+  },
+  signIn: {
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  textSign: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

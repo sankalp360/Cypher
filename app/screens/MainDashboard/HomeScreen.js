@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -22,9 +22,8 @@ import { shadow } from "react-native-paper";
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import dummyData from "../../config/data";
 
-import { Header } from 'react-native-elements';
+import { Header } from "react-native-elements";
 // import { Colors } from "react-native/Libraries/NewAppScreen";
-
 
 import icons from "../../config/icons";
 import SettingCard from "../../components/SettingCard";
@@ -44,73 +43,81 @@ const HomeScreen = () => {
   };
 
   // currencies data baad me api se lena hai
-   // build a usestate 
-  const [trending, setTrending] = React.useState(dummyData.trendingCurrencies)
+  // build a usestate
+  const [trending, setTrending] = React.useState(dummyData.trendingCurrencies);
   //  dummyData.trendingCurrencies is dummy data of currencies
 
   // header function
   function renderheader() {
-
     //this is my flatlist's render function
-    const renderItem =({item,index})=>{
-      return(
-      <TouchableOpacity
-        style={{
-          width :180,
-           paddingVertical:24,
-           paddingHorizontal:24,
-           backgroundColor:COLORS.white,
-           marginLeft:index==0 ? 24: 0,
-           marginRight:10,
-           borderRadius:10,  
-           backgroundColor:COLORS.white           
-        }}
-        // onPress={()=> navigation.navigate('MarketScreen')}  
-      >
-      
-    {/* Currencies card */}
-      <View style={{flexDirection:"row"}}>
-           
-           {/* <Text>Mohit</Text> */}
-           <View> 
-           {/* Ye card ke icon wala view hai  */}
-             <Image 
-                    source={item.image}
-                    resizeMode="cover"
-                    style={{
-                      marginTop:5,
-                      width:25,
-                      height:25
-                    }}
-             />
-           </View>
+    const renderItem = ({ item, index }) => {
+      return (
+        <TouchableOpacity
+          style={{
+            width: 180,
+            paddingVertical: 24,
+            paddingHorizontal: 24,
+            backgroundColor: COLORS.white,
+            marginLeft: index == 0 ? 24 : 0,
+            marginRight: 10,
+            borderRadius: 10,
+            backgroundColor: COLORS.white,
+          }}
+          // onPress={()=> navigation.navigate('MarketScreen')}
+        >
+          {/* Currencies card */}
+          <View style={{ flexDirection: "row" }}>
+            {/* <Text>Mohit</Text> */}
+            <View>
+              {/* Ye card ke icon wala view hai  */}
+              <Image
+                source={item.image}
+                resizeMode="cover"
+                style={{
+                  marginTop: 5,
+                  width: 25,
+                  height: 25,
+                }}
+              />
+            </View>
 
-           <View style={{marginLeft:8}}>
-             <Text style={{...FONTS.h2,fontWeight:"bold"}}>{item.currency}</Text>
-             <Text style={{color:COLORS.gray,...FONTS.body3}}>{item.code}</Text>
-           </View>
-      </View>
+            <View style={{ marginLeft: 8 }}>
+              <Text style={{ ...FONTS.h2, fontWeight: "bold" }}>
+                {item.currency}
+              </Text>
+              <Text style={{ color: COLORS.gray, ...FONTS.body3 }}>
+                {item.code}
+              </Text>
+            </View>
+          </View>
 
-      {/* currencyCard ka  VALUE SECTION START */}
-      <View style={{marginTop:10}}>
-            <Text style={{...FONTS.h4}}>{item.amount}</Text>
-            <Text style={{color:item.type == "I" ? COLORS.green :COLORS.red,...FONTS.h5}}>{item.changes}</Text>
-      </View>
-      </TouchableOpacity>
-      )
-    }
+          {/* currencyCard ka  VALUE SECTION START */}
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ ...FONTS.h4 }}>{item.amount}</Text>
+            <Text
+              style={{
+                color: item.type == "I" ? COLORS.green : COLORS.red,
+                ...FONTS.h5,
+              }}
+            >
+              {item.changes}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      );
+    };
 
     //end of renderItem
-   
+
     return (
       <View
         style={{
           width: "100%",
-            height: 290,       //height of banner background
-          ...styles.shadow
+          height: 290, //height of banner background
+          ...styles.shadow,
         }}
       >
-       {/* //header image */}
+        {/* //header image */}
         <ImageBackground
           source={images.ban}
           resizeMode="cover"
@@ -119,12 +126,11 @@ const HomeScreen = () => {
             alignItems: "center",
           }}
         >
-
-    {/* //Header Bar */}
+          {/* //Header Bar */}
 
           <View
             style={{
-              marginTop:44,
+              marginTop: 44,
               alignItems: "flex-end",
               justifyContent: "center",
               // backgroundColor: "transparent",
@@ -133,124 +139,152 @@ const HomeScreen = () => {
               // marginVertical: 30,
             }}
           >
-          <TouchableOpacity
-              style={{width:35,height:35,alignItems:"center",justifyContent:'center'}}
-           >
-           {/* cypher ka logo lgana hai */}
-           <Image
+            <TouchableOpacity
+              style={{
+                width: 35,
+                height: 35,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {/* cypher ka logo lgana hai */}
+              <Image
                 source={icons.notification_white}
                 resizeMode="contain"
-                style={{flex:1}}
-           />
-          </TouchableOpacity>            
-       </View>
-
-       {/* current Balance data  start*/}
-          <View
-            style={{alignItems:"center",justifyContent:'center'}}
-          >
-          <Text style={{ color: "white" ,...FONTS.h3,fontWeight:'bold'}}>Your Current Balance</Text>
-            <Text style={{ marginTop:8,color: "white", ...FONTS.h1 }}>RS:1500.00 </Text>
-            <Text style={{color:COLORS.white,...FONTS.body5}}>{dummyData.portfolio.changes}  Last 24 Hours</Text>
+                style={{ flex: 1 }}
+              />
+            </TouchableOpacity>
           </View>
 
-
+          {/* current Balance data  start*/}
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Text style={{ color: "white", ...FONTS.h3, fontWeight: "bold" }}>
+              Your Current Balance
+            </Text>
+            <Text style={{ marginTop: 8, color: "white", ...FONTS.h1 }}>
+              RS:1500.00{" "}
+            </Text>
+            <Text style={{ color: COLORS.white, ...FONTS.body5 }}>
+              {dummyData.portfolio.changes} Last 24 Hours
+            </Text>
+          </View>
         </ImageBackground>
-          {/* Scrolling Section */}
-           <View
-              style={{
-                //  height:"40%",
-                 position:"absolute",
-                 bottom:"-30%",
-                //  left:"2%",
-                 
-              }}
-           >
-            <Text style={{marginLeft:24,color:"white",fontSize: 22,fontFamily:"Roboto", lineHeight: 30}}>Trending</Text>
-            <FlatList 
-            contentContainerStyle={{marginTop:8 }}
-              data={trending}
-              renderItem={renderItem}
-              keyExtractor={(item)=>item.id.toString()}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-            />
-            
-           </View>
+        {/* Scrolling Section */}
+        <View
+          style={{
+            //  height:"40%",
+            position: "absolute",
+            bottom: "-30%",
+            //  left:"2%",
+          }}
+        >
+          <Text
+            style={{
+              marginLeft: 24,
+              color: "white",
+              fontSize: 22,
+              fontFamily: "Roboto",
+              lineHeight: 30,
+            }}
+          >
+            Trending
+          </Text>
+          <FlatList
+            contentContainerStyle={{ marginTop: 8 }}
+            data={trending}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
       </View>
-        //  {/* //end of header image */}
+      //  {/* //end of header image */}
     );
   }
-              // end of banner and header section
-  
-              // start of alert section
-              function renderAlert(){
-                return(
-                  <PriceAlert />
-                )
-              }
+  // end of banner and header section
 
+  // start of alert section
+  function renderAlert() {
+    return <PriceAlert />;
+  }
 
-              // This is start of notice box function
-              function NoticeBOX()
-              {
-                return(
-                  <View
-                    style={{
-                     
-                      marginTop:SIZES.padding,
-                      marginHorizontal:SIZES.padding,
-                      padding:10,
-                      borderRadius:SIZES.radius,
-                      backgroundColor:COLORS.secondary,
-                      ...styles.shadow,
-                    }}
-                  >
-                      
-                      {/* create two text Componenet */}
-                      <Text style={{color:COLORS.white,...FONTS.h3,marginHorizontal:8}}>Investing Safety</Text>
-                      <Text style={{color:COLORS.white,marginTop:8,lineHeight:18,...FONTS.body4,marginHorizontal:8}}>It's very difficult to time Investment Espesially when market is volatile.Learn how to use currency cost averaging to your advantage.</Text>
-                
-                      {/* learn more button */}
-                      <TouchableOpacity 
-                      style={{
-                        marginTop:SIZES.base,
-                      }}
-                      onPress={()=>{console.log("Learn More ")}}
-                      >
-                      <Text style={{color:"#F0B0F0",textDecorationLine:"underline",marginHorizontal:8}}>Learn More ></Text> 
-                      </TouchableOpacity>
-                
-                
-                  </View>
-                )
-              }
-              //End of Notice Box
-              
-              function TransactionBOX(){
-                return(
-                  <View
-                    style={{
-                    marginTop:SIZES.padding,
-                    marginHorizontal:SIZES.padding,
-                    padding:10,
-                    marginBottom:SIZES.padding,
-                    backgroundColor:COLORS.white,
-                    borderRadius:SIZES.radius,
-                  }}>
+  // This is start of notice box function
+  function NoticeBOX() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          marginHorizontal: SIZES.padding,
+          padding: 10,
+          borderRadius: SIZES.radius,
+          backgroundColor: COLORS.secondary,
+          ...styles.shadow,
+        }}
+      >
+        {/* create two text Componenet */}
+        <Text style={{ color: COLORS.white, ...FONTS.h3, marginHorizontal: 8 }}>
+          Investing Safety
+        </Text>
+        <Text
+          style={{
+            color: COLORS.white,
+            marginTop: 8,
+            lineHeight: 18,
+            ...FONTS.body4,
+            marginHorizontal: 8,
+          }}
+        >
+          It's very difficult to time Investment Espesially when market is
+          volatile.Learn how to use currency cost averaging to your advantage.
+        </Text>
 
-                                  
-                    
-                     <SettingCard
-                         icon="history"
-                         title="Transaction History"
-                         subtitle="All your transactions on Cypher"
-                    />               
-                    
-                  
-                  </View>
-                )
-              }
+        {/* learn more button */}
+        <TouchableOpacity
+          style={{
+            marginTop: SIZES.base,
+          }}
+          onPress={() => {
+            console.log("Learn More ");
+          }}
+        >
+          <Text
+            style={{
+              color: "#F0B0F0",
+              textDecorationLine: "underline",
+              marginHorizontal: 8,
+            }}
+          >
+            Learn More >
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+  //End of Notice Box
+
+  function TransactionBOX() {
+    return (
+      <View
+        style={{
+          flex: 1,
+          marginTop: SIZES.padding,
+          marginHorizontal: SIZES.padding,
+          padding: 4,
+          backgroundColor: COLORS.white,
+          borderRadius: SIZES.radius,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <SettingCard
+          icon="history"
+          title="Transaction History"
+          subtitle="All your transactions on Cypher"
+        />
+      </View>
+    );
+  }
 
   return (
     <ScrollView>
@@ -272,15 +306,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     paddingBottom: 0,
   },
-  shadow:{
-    shadowColor:"#000",
-    shadowOffset:{
-        width:0,
-        height:4
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
     },
-    shadowOpacity:0.30,
-    shadowRadius:4.65,
-
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
     elevation: 8
 },
  
