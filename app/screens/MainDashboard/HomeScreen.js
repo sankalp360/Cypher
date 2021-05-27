@@ -270,9 +270,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0f0f0",
-    // alignItems: "center",
-    // justifyContent: "center",
-    paddingBottom: 130,
+    paddingBottom: 0,
   },
   shadow:{
     shadowColor:"#000",
@@ -285,46 +283,7 @@ const styles = StyleSheet.create({
 
     elevation: 8
 },
-  coinbox: {
-    width: "90%",
-    height: 100,
-    backgroundColor: COLORS.primary,
-    marginVertical: 10,
-    marginHorizontal: 20,
-    opacity: 0.72,
-    borderRadius: SIZES.radius,
-  },
-  coinbox2: {
-    width: "90%",
-    height: 100,
-    backgroundColor: COLORS.primary,
-    marginVertical: 10,
-    marginHorizontal: 20,
-    opacity: 0.9,
-    borderRadius: SIZES.radius,
-  },
-  messagebox: {
-    width: "90%",
-    height: 100,
-    backgroundColor: COLORS.primary,
-    marginVertical: 10,
-    marginHorizontal: 20,
-    opacity: 0.9,
-    borderRadius: SIZES.radius,
-  },
+ 
 });
 
-{
-  /* <Button onPress={() => getToken()} title="Get Token" />   
-      
-                        */
-}
-// const coinbox = () => {
-  //   return <View style={styles.coinbox}></View>;
-  // };
-  // const coinbox2 = () => {
-  //   return <View style={styles.coinbox2}></View>;
-  // };
-  // const messagebox = () => {
-  //   return <View style={styles.messagebox}></View>;
-  // };
+

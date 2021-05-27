@@ -27,12 +27,16 @@ const TransactionScreen = () => {
             </View>
             {/* headtext end  */}
 
-            
+            {/* Start of Amount Input feild */}  
             <View style={styles.action}>            
            {/* currency tag side wala */}
             
-            <Text style={{textAlign:'right' , color:'black',width:'20%',position:'absolute',right:12,fontSize:20,fontWeight:'800'}}>CYP</Text>
-             
+          
+            {/* <Text style={{textAlign:'right' , color:'black',width:'20%',position:'relative',left:250,fontSize:20,fontWeight:'800',marginHorizontal:2}}>CYP</Text> */}
+             <View style={{marginHorizontal:2}}>
+               <Text style={{textAlign:'right' , color:'black',fontSize:20,fontWeight:'800',}}>CYP</Text>
+             </View>
+
               <TextInput
                 placeholder="Amount"
                 style={styles.textInput}
@@ -139,19 +143,15 @@ const styles = StyleSheet.create({
       borderBottomColor: '#f2f2f2',
       paddingBottom: 5
   },
-  actionError: {
-      flexDirection: 'row',
-      marginTop: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: '#FF0000',
-      paddingBottom: 5
-  },
+  
   textInput: {
       flex: 1,
       paddingLeft: 15,
       color: '#05375a',
       textAlign:'center',
-      fontSize:15
+      fontSize:17,
+      fontWeight:'200'
+
   },
   transact: {
       backgroundColor:COLORS.secondary,
