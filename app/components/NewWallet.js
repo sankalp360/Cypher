@@ -131,45 +131,6 @@ const NewWallet = ({ uid, isWallet }) => {
       </Animatable.View>
     </View>
   );
-
-  // return (
-  //   <ScrollView style={styles.container}>
-  //     <View style={styles.upper}>
-  //       <Text style={styles.upperText}>You do not have a wallet</Text>
-  //       <Text style={styles.upperText}>Create a Wallet !</Text>
-  //     </View>
-  //     <View style={styles.createBox}>
-  //       <Text style={styles.boxHead}>Create New Wallet</Text>
-  //       <View style={styles.action}>
-  //         <TextInput
-  //           onChangeText={(val) => handleNameChange(val)}
-  //           placeholder="Name"
-  //           style={styles.textInput}
-  //         />
-  //       </View>
-  //       <View style={styles.action}>
-  //         <TextInput
-  //           onChangeText={(val) => handleMobileChange(val)}
-  //           placeholder="Mobile"
-  //           style={styles.textInput}
-  //           keyboardType="phone-pad"
-  //         />
-  //       </View>
-  //       <View style={styles.action}>
-  //         <TextInput
-  //           onChangeText={(val) => handleCountryChange(val)}
-  //           placeholder="Country"
-  //           style={styles.textInput}
-  //         />
-  //       </View>
-  //       <TouchableOpacity style={styles.button} onPress={() => createWallet()}>
-  //         <LinearGradient colors={["#7F5DF0", "#513C98"]} style={styles.button}>
-  //           <Text style={styles.buttonText}>Create Wallet</Text>
-  //         </LinearGradient>
-  //       </TouchableOpacity>
-  //     </View>
-  //   </ScrollView>
-  // );
 };
 
 export default NewWallet;

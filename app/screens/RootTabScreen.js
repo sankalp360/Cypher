@@ -4,7 +4,7 @@ import * as Animatable from "react-native-animatable";
 // import LinearGradient from 'react-native-linear-gradient';
 
 import HomeScreen from "./MainDashboard/HomeScreen";
-import PortfolioScreen from "./MainDashboard/PortfolioScreen";
+import PortfolioStackScreen from "./MainDashboard/PortfolioStackScreen";
 import TransactionStackScreen from "./MainDashboard/TransactionStackScreen";
 import MarketScreen from "./MainDashboard/MarketScreen";
 import SettingScreen from "./MainDashboard/SettingScreen";
@@ -60,7 +60,7 @@ function RootTabScreen() {
       />
       <Tab.Screen
         name="Portfolio"
-        component={PortfolioScreen}
+        component={PortfolioStackScreen}
         options={{
           tabBarLabel: "Portfolio",
           tabBarIcon: ({ focused }) => (
