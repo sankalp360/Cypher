@@ -5,7 +5,7 @@ import * as Animatable from "react-native-animatable";
 
 import HomeScreen from "./MainDashboard/HomeScreen";
 import PortfolioScreen from "./MainDashboard/PortfolioScreen";
-import TransactionScreen from "./MainDashboard/TransactionScreen";
+import TransactionStackScreen from "./MainDashboard/TransactionStackScreen";
 import MarketScreen from "./MainDashboard/MarketScreen";
 import SettingScreen from "./MainDashboard/SettingScreen";
 
@@ -85,7 +85,7 @@ function RootTabScreen() {
       />
       <Tab.Screen
         name="Transaction"
-        component={TransactionScreen}
+        component={TransactionStackScreen}
         options={{
           tabBarLabel: "Transaction",
           tabBarIcon: ({ focused }) => (
