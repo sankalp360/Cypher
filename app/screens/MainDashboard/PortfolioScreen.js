@@ -38,14 +38,18 @@ const PortfolioScreen = () => {
     privateKey: "",
   }); //*
 
-  const [amount, setAmount] = useState("0"); //*
+  const [amount, setAmount] = useState(""); //*
   const [isWallet, setIsWallet] = useState(false); //*
   const [uid, setUid] = useState("ini"); //*
   const [reveal, setReveal] = useState(false); //*
   const [loader, setLoader] = useState(false);
   const [moneyLoader, setMoneyLoader] = useState(false);
   const [money, setMoney] = useState("");
-  const [status, setStatus] = useState(false);
+  const [disable, setDisable] = useState(false);
+  const [bank, setBank] = useState({
+    status: false,
+    text: "",
+  });
 
   fireauth.onAuthStateChanged((user) => {
     if (user) {
@@ -77,6 +81,7 @@ const PortfolioScreen = () => {
   }, [uid, isWallet, wallet]); //* Runs always on these state changes.
 
   function revealWallet() {
+    setDisable(true);
     setMoneyLoader(true);
     axios
       .get(
@@ -93,6 +98,8 @@ const PortfolioScreen = () => {
       .then(() => {
         setTimeout(() => {
           setReveal(false);
+          setAmount("");
+          setDisable(false);
         }, 8000);
       })
       .catch((error) => console.log(error));
@@ -108,22 +115,49 @@ const PortfolioScreen = () => {
   };
 
   function handleRequestFromBank() {
+    setDisable(true);
     setLoader(true);
+    setMoney("");
     axios
       .post(`https://cypher-advanced-wallet.herokuapp.com/transferFromBank`, {
         UserId: wallet.walletId,
         TransferAmmount: parseInt(money),
       })
+      .then(() => {
+        setLoader(false);
+        setBank({
+          status: true,
+          text: "Money Received 🤑",
+        });
+        setTimeout(() => {
+          setBank({
+            status: false,
+            text: "",
+          });
+          setDisable(false);
+        }, 5000);
+      })
       .catch((err) => {
-        console.log("error: " + err.response.status);
+        console.log("error: " + err);
+        setLoader(false);
         if (err.response.status == 503) {
-          setMoney("");
-          setLoader(false);
-          setStatus(true);
-          setTimeout(() => {
-            setStatus(false);
-          }, 5000);
+          setBank({
+            status: true,
+            text: "Money Received 🤑",
+          });
+        } else {
+          setBank({
+            status: true,
+            text: "Transaction Failed 🥺",
+          });
         }
+        setTimeout(() => {
+          setBank({
+            status: false,
+            text: "",
+          });
+          setDisable(false);
+        }, 5000);
       });
   }
 
@@ -224,6 +258,7 @@ const PortfolioScreen = () => {
                   ) : (
                     <View style={styles.revealContainer}>
                       <TouchableOpacity
+                        disabled={disable}
                         style={styles.revealBox}
                         onPress={revealWallet}
                       >
@@ -248,8 +283,8 @@ const PortfolioScreen = () => {
                 icon="alpha-c-circle"
                 name="Cypher"
                 symbol="CYP"
-                change={parseInt(amount).toFixed(0)}
-                worth={"₹" + parseInt(amount) * 1}
+                change={amount}
+                worth={amount}
                 changeColor="grey"
                 iconName="chevron-up"
               />
@@ -259,8 +294,8 @@ const PortfolioScreen = () => {
             ) : null}
             {wallet.walletId ? (
               <View style={styles.rcontainer}>
-                {status ? (
-                  <Text style={styles.rsuccessTxt}>Money Received 🤑</Text>
+                {bank.status ? (
+                  <Text style={styles.rsuccessTxt}>{bank.text}</Text>
                 ) : null}
                 {loader ? (
                   <ActivityIndicator size="large" color="#7F5DF0" />
@@ -274,6 +309,7 @@ const PortfolioScreen = () => {
                   />
                 </View>
                 <TouchableOpacity
+                  disabled={disable}
                   style={styles.rbutton}
                   onPress={handleRequestFromBank}
                 >

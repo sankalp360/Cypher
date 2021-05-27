@@ -22,14 +22,26 @@ const AssetCard = ({
         <Text style={styles.symbol}>{symbol}</Text>
       </View>
       <View style={styles.value}>
-        <Text style={styles.worth}>{worth}</Text>
+        {worth ? (
+          <Text style={styles.worth}>{"₹" + parseInt(worth) * 1}</Text>
+        ) : (
+          <Text style={styles.worth}>Not Revealed</Text>
+        )}
         <View style={styles.arrow}>
           {/* <MaterialCommunityIcons
             name={iconName}
             color={changeColor}
             size={30}
           /> */}
-          <Text style={(styles.change, { color: changeColor })}>{change}</Text>
+          {change ? (
+            <Text style={(styles.change, { color: changeColor })}>
+              {parseInt(change).toFixed(0)}
+            </Text>
+          ) : (
+            <Text style={(styles.change, { color: changeColor })}>
+              Not Revealed
+            </Text>
+          )}
         </View>
       </View>
     </TouchableOpacity>
