@@ -85,56 +85,7 @@ const TransactionScreen = () => {
           </TouchableOpacity>
         </View>
         {/* end of button */}
-        <View style={styles.footer}>
-            
-            {/* Headtext start*/}
-            <View style={{marginVertical:12}}>
-            <Text style={{textAlign:'center',color:'black',fontWeight:'bold'}}>Minimum Withdrawal Amount: </Text>
-            <Text style={{textAlign:'center',color:COLORS.primary,fontWeight:'bold',fontSize:25}}>1.000 CYP </Text>
-            </View>
-            {/* headtext end  */}
-
-            {/* Start of Amount Input feild */}  
-            <View style={styles.action}>            
-           {/* currency tag side wala */}
-            
-          
-            {/* <Text style={{textAlign:'right' , color:'black',width:'20%',position:'relative',left:250,fontSize:20,fontWeight:'800',marginHorizontal:2}}>CYP</Text> */}
-             <View style={{marginHorizontal:2}}>
-               <Text style={{textAlign:'right' , color:'black',fontSize:20,fontWeight:'800',}}>CYP</Text>
-             </View>
-
-              <TextInput
-                placeholder="Amount"
-                style={styles.textInput}
-                keyboardType="numeric"
-                
-              >                
-              </TextInput>
-            </View>
-            {/* End of Amount Input feild */}
-
-            {/* Start of hash adrress input feild */}  
-            <View style={styles.action}>            
-              <TextInput
-                placeholder="Enter Hash Address"
-                style={styles.textInput}
-                keyboardType="ascii-capable"
-              ></TextInput>
-            </View>
-            {/* end of hash adrress input feild */}
-
-     {/* start of button send */}
-            <View style={styles.transact}>
-                 <TouchableOpacity>
-                     <Text
-                     style={{color:COLORS.white,fontSize:18,textAlign:'center'}}>SEND</Text>
-                 </TouchableOpacity>
-            </View>
-           {/* end of button */}
-
-
-           {/* Start of banner */}
+        {/* Start of banner */}
         <View
           style={{
             marginTop: 2,
@@ -185,7 +136,6 @@ const TransactionScreen = () => {
             </Text>
           </TouchableOpacity>
         </View>
-
         {/* END OF BANNER */}
       </Animatable.View>
     </View>
@@ -233,14 +183,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
-  },  
+  },
   textInput: {
-      flex: 1,
-      paddingLeft: 15,
-      color: '#05375a',
-      textAlign:'center',
-      fontSize:17,
-      fontWeight:'200'
+    flex: 1,
+    paddingLeft: 15,
+    color: "#05375a",
+    textAlign: "center",
+    fontSize: 17,
+    fontWeight: "200",
   },
   actionError: {
     flexDirection: "row",
