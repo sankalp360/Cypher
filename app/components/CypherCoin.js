@@ -3,39 +3,29 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
 import { COLORS } from "../config/theme";
 
-const Coin = ({ name, image, symbol, price, priceChange }) => {
-  let firstName = name.split(" ");
-
+const CypherCoin = () => {
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.coinRow}>
         <Image
           resizeMode="contain"
           style={styles.crypto}
-          source={{ uri: image }}
+          source={require("../assets/images/cypher.png")}
         />
         <View style={styles.coin}>
-          <Text style={styles.name}>{firstName[0]}</Text>
-          <Text style={styles.coinSymbol}>{symbol}</Text>
+          <Text style={styles.name}>Cypher</Text>
+          <Text style={styles.coinSymbol}>CYP</Text>
         </View>
         <View style={styles.coinData}>
-          <Text style={styles.coinPrice}>₹{price.toLocaleString()}</Text>
-          {priceChange < 0 ? (
-            <Text style={styles.coinPercentRed}>
-              Loss: {priceChange.toFixed(2)}%
-            </Text>
-          ) : (
-            <Text style={styles.coinPercentGreen}>
-              Gain: {priceChange.toFixed(2)}%
-            </Text>
-          )}
+          <Text style={styles.coinPrice}>₹1.00</Text>
+          <Text style={styles.coinPercentGreen}>Gain: 0.00%</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default Coin;
+export default CypherCoin;
 
 const styles = StyleSheet.create({
   container: {

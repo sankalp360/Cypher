@@ -25,7 +25,11 @@ const SendMoneyScreen = ({ navigation, id, base }) => {
   });
 
   const handleMoneyChange = (val) => {
-    setMoney(val);
+    if (parseInt(val) > 200) {
+      setMoney("200");
+    } else {
+      setMoney(val);
+    }
     console.log(val);
   };
 
@@ -99,8 +103,8 @@ const SendMoneyScreen = ({ navigation, id, base }) => {
 
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <View style={styles.footHead}>
-          <Text style={styles.footHeadText}>Minimum Transaction Amount:</Text>
-          <Text style={styles.footHeadText2}>1.000 CYP</Text>
+          <Text style={styles.footHeadText}>Maximum Transaction Amount:</Text>
+          <Text style={styles.footHeadText2}>200.00 CYP</Text>
         </View>
         {bank.status ? (
           <Text style={styles.rsuccessTxt}>{bank.text}</Text>

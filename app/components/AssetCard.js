@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const AssetCard = ({
@@ -15,7 +15,11 @@ const AssetCard = ({
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.icon}>
-        <MaterialCommunityIcons name={icon} color="#7F5DF0" size={40} />
+        <Image
+          resizeMode="contain"
+          style={styles.crypto}
+          source={require("../assets/images/cypher.png")}
+        />
       </View>
       <View style={styles.info}>
         <Text style={styles.name}>{name}</Text>
@@ -62,6 +66,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     elevation: 8,
     alignSelf: "center",
+  },
+  crypto: {
+    height: 40,
+    width: 40,
   },
   icon: {
     marginRight: 15,

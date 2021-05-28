@@ -9,7 +9,9 @@ import {
 
 import axios from "axios";
 
-import { COLORS } from "../config/theme";
+import * as Animatable from "react-native-animatable";
+
+import { COLORS, SIZES } from "../config/theme";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -51,15 +53,23 @@ const PortfolioDetailsSection = ({
   }
 
   return (
-    <View style={styles.textHolder}>
+    <Animatable.View animation="bounceIn" style={styles.textHolder}>
       <Text style={styles.portfolioHeroHeading}>Portfolio Details</Text>
       <View style={styles.basicDetails}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <MaterialCommunityIcons name="phone" color={COLORS.white} size={30} />
+          <MaterialCommunityIcons
+            name="phone"
+            color={COLORS.secondary}
+            size={30}
+          />
           <Text style={styles.phone}>{phone}</Text>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <MaterialCommunityIcons name="earth" color={COLORS.white} size={30} />
+          <MaterialCommunityIcons
+            name="earth"
+            color={COLORS.secondary}
+            size={30}
+          />
           <Text style={styles.country}>{country}</Text>
         </View>
       </View>
@@ -68,12 +78,17 @@ const PortfolioDetailsSection = ({
         <View>
           <Text style={styles.privateKeyInner}>{privateKey}</Text>
         </View>
-      ) : null}
+      ) : (
+        <View>
+          <Text style={styles.privateKeyInner}>Hidden</Text>
+        </View>
+      )}
+      <View style={styles.secondaryTextHolder}>
+        <Text style={styles.portfolioInvestedValue}>Your Balance</Text>
+      </View>
       {reveal ? (
         <View style={styles.secondaryTextHolder}>
           <Text style={styles.portfolioWorth}>₹{parseInt(amount) * 1}</Text>
-          <MaterialCommunityIcons name="chevron-up" color="white" size={30} />
-          <Text style={styles.portfolioInvestedValue}>10.25%</Text>
         </View>
       ) : (
         <View style={styles.revealContainer}>
@@ -84,12 +99,16 @@ const PortfolioDetailsSection = ({
           >
             <Text style={styles.revealTxt}>Reveal</Text>
           </TouchableOpacity>
-          {moneyLoader ? (
-            <ActivityIndicator size="small" color={COLORS.white} />
-          ) : null}
         </View>
       )}
-    </View>
+      {moneyLoader ? (
+        <View
+          style={{ width: "100%", justifyContent: "center", marginTop: 10 }}
+        >
+          <ActivityIndicator size="small" color={COLORS.secondary} />
+        </View>
+      ) : null}
+    </Animatable.View>
   );
 };
 
@@ -101,7 +120,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     marginTop: 25,
     alignSelf: "flex-start",
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.white,
     width: "100%",
     paddingHorizontal: 20,
     paddingVertical: 12,
@@ -109,22 +128,19 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   portfolioHeroHeading: {
-    color: "#fff",
-    fontSize: 30,
+    color: COLORS.black,
+    fontSize: 20,
     fontWeight: "bold",
   },
   portfolioWorth: {
-    color: "#fff",
-    fontSize: 20,
-    marginRight: 110,
-  },
-  portfolioInvested: {
-    color: "#fff",
-    fontSize: 20,
+    color: COLORS.secondary,
+    fontSize: 15,
   },
   portfolioInvestedValue: {
-    color: "#fff",
-    fontSize: 20,
+    color: COLORS.black,
+    fontSize: 15,
+    marginRight: 30,
+    fontWeight: "bold",
   },
   basicDetails: {
     height: 70,
@@ -133,27 +149,26 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   phone: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
     marginBottom: 5,
-    marginRight: 30,
-    color: COLORS.white,
+    marginRight: 90,
+    color: COLORS.secondary,
   },
   country: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
-    color: COLORS.white,
+    color: COLORS.secondary,
   },
   privateKey: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: "bold",
-    color: COLORS.white,
+    color: COLORS.black,
     marginTop: -25,
   },
   privateKeyInner: {
-    marginTop: 10,
     fontSize: 15,
-    color: COLORS.white,
+    color: COLORS.secondary,
   },
   revealContainer: {
     flexDirection: "row",
@@ -161,23 +176,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   revealBox: {
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 4,
-    marginRight: 10,
+    width: "100%",
+    backgroundColor: COLORS.secondary,
+    marginTop: 10,
+    marginHorizontal: 4,
+    padding: 12,
+    borderRadius: SIZES.radius - 5,
+    elevation: 8,
   },
   revealTxt: {
-    color: COLORS.secondary,
+    color: COLORS.white,
+    fontSize: 18,
+    textAlign: "center",
   },
   secondaryTextHolder: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    color: COLORS.white,
+    color: COLORS.secondary,
     marginTop: 10,
   },
 });

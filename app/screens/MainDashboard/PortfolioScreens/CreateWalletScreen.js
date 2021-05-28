@@ -70,7 +70,6 @@ const FromBankScreen = ({ navigation, uid }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={COLORS.secondary} barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>Create New Wallet</Text>
       </View>

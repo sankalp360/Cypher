@@ -1,18 +1,12 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ActivityIndicator,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 
-let ScreenHeight = Dimensions.get("window").height;
+import { COLORS } from "../config/theme";
 
 const LoadingScreen = () => {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#7F5DF0" />
+      <ActivityIndicator size="large" color={COLORS.white} />
     </View>
   );
 };
@@ -20,7 +14,7 @@ const LoadingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.secondary,
     paddingTop: 350,
   },
 });

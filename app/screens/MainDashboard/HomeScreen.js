@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   ScrollView,
   FlatList,
   TouchableOpacity,
@@ -12,39 +11,36 @@ import {
   StatusBar,
 } from "react-native";
 
-import firebase from "firebase/app";
-import "firebase/auth";
-
-// import { icons } from "../../config";
 import { COLORS, FONTS, SIZES } from "../../config/theme";
 import images from "../../config/images";
-import { shadow } from "react-native-paper";
-import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import dummyData from "../../config/data";
-
-import { Header } from "react-native-elements";
-// import { Colors } from "react-native/Libraries/NewAppScreen";
-
 import icons from "../../config/icons";
-import SettingCard from "../../components/SettingCard";
 
 import PriceAlert from "../../components/PriceAlert";
+import NoticeBox from "../../components/NoticeBox";
+import axios from "axios";
 
 const HomeScreen = () => {
-  //   firebase gettoken function
-  const getToken = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        user.getIdToken().then((data) => {
-          console.log(data);
-        });
-      }
-    });
+  BaseURL = "https://cypher-advanced-wallet.herokuapp.com";
+
+  const [bankWorth, setBankWorth] = useState("100000000000000000000000000");
+
+  useEffect(() => {
+    axios
+      .get(`${BaseURL}/getBankDetails`)
+      .then((res) => {
+        setBankWorth(res.data.TotalSupply);
+      })
+      .catch((err) => console.log("error: " + err));
+  }, []);
+
+  const formatToCurrency = (amount) => {
+    return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
   };
 
   // currencies data baad me api se lena hai
   // build a usestate
-  const [trending, setTrending] = React.useState(dummyData.trendingCurrencies);
+  const [trending, setTrending] = useState(dummyData.trendingCurrencies);
   //  dummyData.trendingCurrencies is dummy data of currencies
 
   // header function
@@ -67,7 +63,6 @@ const HomeScreen = () => {
         >
           {/* Currencies card */}
           <View style={{ flexDirection: "row" }}>
-            {/* <Text>Mohit</Text> */}
             <View>
               {/* Ye card ke icon wala view hai  */}
               <Image
@@ -113,7 +108,7 @@ const HomeScreen = () => {
       <View
         style={{
           width: "100%",
-          height: 290, //height of banner background
+          height: 260, //height of banner background
           ...styles.shadow,
         }}
       >
@@ -130,13 +125,10 @@ const HomeScreen = () => {
 
           <View
             style={{
-              marginTop: 44,
+              marginTop: 10,
               alignItems: "flex-end",
               justifyContent: "center",
-              // backgroundColor: "transparent",
               width: "100%",
-              // height: 100,
-              // marginVertical: 30,
             }}
           >
             <TouchableOpacity
@@ -159,10 +151,10 @@ const HomeScreen = () => {
           {/* current Balance data  start*/}
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <Text style={{ color: "white", ...FONTS.h3, fontWeight: "bold" }}>
-              Your Current Balance
+              Cypher Bank Balance
             </Text>
-            <Text style={{ marginTop: 8, color: "white", ...FONTS.h1 }}>
-              RS:1500.00{" "}
+            <Text style={{ marginTop: 8, color: "white", ...FONTS.h3 }}>
+              {formatToCurrency(parseInt(bankWorth) / 10000000000000000000)}
             </Text>
             <Text style={{ color: COLORS.white, ...FONTS.body5 }}>
               {dummyData.portfolio.changes} Last 24 Hours
@@ -202,97 +194,13 @@ const HomeScreen = () => {
       //  {/* //end of header image */}
     );
   }
-  // end of banner and header section
-
-  // start of alert section
-  function renderAlert() {
-    return <PriceAlert />;
-  }
-
-  // This is start of notice box function
-  function NoticeBOX() {
-    return (
-      <View
-        style={{
-          marginTop: SIZES.padding,
-          marginHorizontal: SIZES.padding,
-          padding: 10,
-          borderRadius: SIZES.radius,
-          backgroundColor: COLORS.secondary,
-          ...styles.shadow,
-        }}
-      >
-        {/* create two text Componenet */}
-        <Text style={{ color: COLORS.white, ...FONTS.h3, marginHorizontal: 8 }}>
-          Investing Safety
-        </Text>
-        <Text
-          style={{
-            color: COLORS.white,
-            marginTop: 8,
-            lineHeight: 18,
-            ...FONTS.body4,
-            marginHorizontal: 8,
-          }}
-        >
-          It's very difficult to time Investment Espesially when market is
-          volatile.Learn how to use currency cost averaging to your advantage.
-        </Text>
-
-        {/* learn more button */}
-        <TouchableOpacity
-          style={{
-            marginTop: SIZES.base,
-          }}
-          onPress={() => {
-            console.log("Learn More ");
-          }}
-        >
-          <Text
-            style={{
-              color: "#F0B0F0",
-              textDecorationLine: "underline",
-              marginHorizontal: 8,
-            }}
-          >
-            Learn More >
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-  //End of Notice Box
-
-  function TransactionBOX() {
-    return (
-      <View
-        style={{
-          flex: 1,
-          marginTop: SIZES.padding,
-          marginHorizontal: SIZES.padding,
-          padding: 4,
-          backgroundColor: COLORS.white,
-          borderRadius: SIZES.radius,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <SettingCard
-          icon="history"
-          title="Transaction History"
-          subtitle="All your transactions on Cypher"
-        />
-      </View>
-    );
-  }
 
   return (
     <ScrollView>
       <View style={styles.container}>
         {renderheader()}
-        {renderAlert()}
-        {NoticeBOX()}
-        {TransactionBOX()}
+        <PriceAlert />
+        <NoticeBox />
       </View>
     </ScrollView>
   );
@@ -314,9 +222,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
-    elevation: 8
-},
- 
+    elevation: 8,
+  },
 });
-
-

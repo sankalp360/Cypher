@@ -17,6 +17,7 @@ import icons from "../config/icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import MarketScreenOld from "./MainDashboard/MarketScreenOld";
 
 const Tab = createBottomTabNavigator();
 

@@ -38,8 +38,8 @@ const ReceiveMoneyScreen = ({ navigation, id }) => {
 
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <View style={styles.footHead}>
-          <Text style={styles.footHeadText}>Minimum Transaction Amount:</Text>
-          <Text style={styles.footHeadText2}>1.000 CYP</Text>
+          <Text style={styles.footHeadText}>Maximum Transaction Amount:</Text>
+          <Text style={styles.footHeadText2}>200.00 CYP</Text>
         </View>
         <Text style={styles.footMethodText}>Your Account Hash Id</Text>
         <Text style={styles.footMethodText2}>{id}</Text>
