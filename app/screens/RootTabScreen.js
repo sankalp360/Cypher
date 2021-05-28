@@ -7,7 +7,7 @@ import HomeScreen from "./MainDashboard/HomeScreen";
 import PortfolioStackScreen from "./MainDashboard/PortfolioStackScreen";
 import TransactionStackScreen from "./MainDashboard/TransactionStackScreen";
 import MarketScreen from "./MainDashboard/MarketScreen";
-import SettingScreen from "./MainDashboard/SettingScreen";
+import SettingStackScreen from "./MainDashboard/SettingStackScreen";
 
 //for theme ......................
 import { COLORS, FONTS } from "../config/theme";
@@ -125,7 +125,7 @@ function RootTabScreen() {
       />
       <Tab.Screen
         name="Setting"
-        component={SettingScreen}
+        component={SettingStackScreen}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ focused }) => (
