@@ -7,143 +7,113 @@ import {
   StyleSheet,
   StatusBar,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 
-import axios from "axios";
+import { db, fireauth } from "../../../config/firebase";
 
 import * as Animatable from "react-native-animatable";
 import { COLORS, SIZES } from "../../../config/theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-const FromBankScreen = ({ navigation, id, base }) => {
-  const [money, setMoney] = useState("");
-  const [loader, setLoader] = useState(false);
-  const [disable, setDisable] = useState(false);
-  const [bank, setBank] = useState({
-    status: false,
-    text: "",
+const FromBankScreen = ({ navigation, uid }) => {
+  const [wallet, setWallet] = useState({
+    name: "",
+    phone: "",
+    country: "",
   });
 
-  const handleMoneyChange = (val) => {
-    setMoney(val);
-    console.log(val);
-    console.log(id);
-    console.log(base);
+  const [loader, setLoader] = useState(false);
+  const [disable, setDisable] = useState(false);
+
+  const handleNameChange = (val) => {
+    setWallet({
+      ...wallet,
+      name: val,
+    });
   };
 
-  function handleRequestFromBank() {
+  const handlePhoneChange = (val) => {
+    setWallet({
+      ...wallet,
+      phone: val,
+    });
+  };
+
+  const handleCountryChange = (val) => {
+    setWallet({
+      ...wallet,
+      country: val,
+    });
+  };
+
+  const createWallet = () => {
     setDisable(true);
     setLoader(true);
-    setMoney("");
-    axios
-      .post(`${base}/transferFromBank`, {
-        UserId: id,
-        TransferAmmount: parseInt(money),
+    db.collection("wallets")
+      .doc(uid)
+      .set({
+        name: wallet.name,
+        phone: wallet.phone,
+        country: wallet.country,
+        walletId: "",
+        privateKey: "",
       })
       .then(() => {
         setLoader(false);
-        setBank({
-          status: true,
-          text: "Money Received 🤑",
-        });
-        setTimeout(() => {
-          setBank({
-            status: false,
-            text: "",
-          });
-          setDisable(false);
-        }, 5000);
+        console.log("document written");
+        navigation.navigate("OneMoreStep");
+        setDisable(false);
       })
-      .catch((err) => {
-        console.log("error: " + err);
-        setLoader(false);
-        if (err.response.status == 503) {
-          setBank({
-            status: true,
-            text: "Money Received 🤑",
-          });
-        } else {
-          setBank({
-            status: true,
-            text: "Transaction Failed 🥺",
-          });
-        }
-        setTimeout(() => {
-          setBank({
-            status: false,
-            text: "",
-          });
-          setDisable(false);
-        }, 5000);
-      });
-  }
+      .catch((err) => console.log(err.message));
+  };
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.secondary} barStyle="light-content" />
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SendMoney")}
-          style={styles.sendIcon}
-        >
-          <MaterialCommunityIcons
-            style={styles.sendInner}
-            name="send"
-            color={COLORS.secondary}
-            size={30}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("ReceiveMoney")}
-          style={styles.receiveIcon}
-        >
-          <MaterialCommunityIcons
-            style={styles.receiveInner}
-            name="call-received"
-            color={COLORS.secondary}
-            size={30}
-          />
-        </TouchableOpacity>
-        <Text style={styles.text_header}>Add Money To Wallet</Text>
+        <Text style={styles.text_header}>Create New Wallet</Text>
       </View>
 
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-        <View style={styles.footHead}>
-          <Text style={styles.footHeadText}>Minimum Transaction Amount:</Text>
-          <Text style={styles.footHeadText2}>1.000 CYP</Text>
-        </View>
-        {bank.status ? (
-          <Text style={styles.rsuccessTxt}>{bank.text}</Text>
-        ) : null}
-        <View style={styles.action}>
-          <Text style={styles.actionText}>CYP</Text>
-
-          <TextInput
-            onChangeText={(val) => handleMoneyChange(val)}
-            placeholder="Amount"
-            style={styles.textInput}
-            keyboardType="numeric"
-            value={money}
-          ></TextInput>
-        </View>
-        <TouchableOpacity
-          onPress={handleRequestFromBank}
-          disabled={disable}
-          style={styles.transact}
-        >
-          <Text style={styles.transactText}>REQUEST</Text>
-        </TouchableOpacity>
-        {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
-        <Text style={styles.footMethodText}>Or Exchange Via</Text>
-        <TouchableOpacity style={styles.method}>
-          <Text style={styles.methodText}>PAYTM</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.method}>
-          <Text style={styles.methodText}>UPI</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.method}>
-          <Text style={styles.methodText}>DEBIT CARD</Text>
-        </TouchableOpacity>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.footHead}>
+            <Text style={styles.footHeadText}>You Don't Have A Wallet !</Text>
+            <Text style={styles.footHeadText2}>Create One </Text>
+            {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              onChangeText={(val) => handleNameChange(val)}
+              placeholder="Name"
+              style={styles.textInput}
+              keyboardType="ascii-capable"
+            ></TextInput>
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              onChangeText={(val) => handlePhoneChange(val)}
+              placeholder="Phone"
+              style={styles.textInput}
+              keyboardType="phone-pad"
+            ></TextInput>
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              onChangeText={(val) => handleCountryChange(val)}
+              placeholder="Country"
+              style={styles.textInput}
+              keyboardType="ascii-capable"
+            ></TextInput>
+          </View>
+          <TouchableOpacity
+            onPress={createWallet}
+            disabled={disable}
+            style={styles.transact}
+          >
+            <Text style={styles.transactText}>CREATE</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </Animatable.View>
     </View>
   );
@@ -156,41 +126,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.secondary,
   },
-  sendIcon: {
-    position: "absolute",
-    top: 50,
-    right: 25,
-    backgroundColor: COLORS.white,
-    borderRadius: 50,
-    height: 50,
-    width: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  receiveIcon: {
-    position: "absolute",
-    top: 50,
-    right: 90,
-    backgroundColor: COLORS.white,
-    borderRadius: 50,
-    height: 50,
-    width: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  sendInner: {
-    transform: [{ rotate: "330deg" }],
-    marginTop: -3,
-    marginLeft: 3,
-  },
   header: {
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
     paddingBottom: 50,
   },
+  text_header: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 27,
+    marginBottom: -20,
+  },
   footer: {
-    flex: 3,
+    flex: 5,
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -199,7 +148,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   footHead: {
-    marginVertical: 12,
+    marginVertical: 5,
   },
   footHeadText: {
     textAlign: "center",
@@ -208,15 +157,9 @@ const styles = StyleSheet.create({
   },
   footHeadText2: {
     textAlign: "center",
-    color: COLORS.secondary,
+    color: COLORS.black,
     fontWeight: "bold",
-    fontSize: 25,
-  },
-  text_header: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 27,
-    marginBottom: -20,
+    fontSize: 20,
   },
   text_footer: {
     marginTop: 8,

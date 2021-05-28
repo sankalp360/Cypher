@@ -9,6 +9,7 @@ const BaseURL = "https://cypher-advanced-wallet.herokuapp.com";
 
 import MainPortfolioScreen from "./PortfolioScreens/MainPortfolioScreen";
 import CreateWalletScreen from "./PortfolioScreens/CreateWalletScreen";
+import OneMoreStepScreen from "./PortfolioScreens/OneMoreStepScreen";
 
 const PortfolioStack = createStackNavigator();
 
@@ -31,6 +32,10 @@ const PortfolioStackScreen = ({ navigation }) => {
     status: false,
     text: "",
   });
+
+  function handleAuthChange(childData) {
+    setIsWallet(true);
+  }
 
   fireauth.onAuthStateChanged((user) => {
     if (user) {
@@ -59,24 +64,36 @@ const PortfolioStackScreen = ({ navigation }) => {
       .catch((error) => {
         console.log("Error getting document:", error);
       });
-  }, [uid]); //* Runs always on these state changes.
+  }, [uid, isWallet]); //* Runs always on these state changes.
 
   return (
-    <PortfolioStack.Navigator headerMode="none">
-        <PortfolioStack.Screen name="MainPortfolio">
-          {(props) => (
-            <MainPortfolioScreen
-              {...props}
-              base={BaseURL}
-              id={wallet.walletId}
-              name={wallet.name}
-              phone={wallet.phone}
-              country={wallet.country}
-              privateKey={wallet.privateKey}
-            />
-          )}
-        </PortfolioStack.Screen>
-    </PortfolioStack.Navigator>
+    <>
+      {isWallet ? (
+        <MainPortfolioScreen
+          base={BaseURL}
+          id={wallet.walletId}
+          name={wallet.name}
+          phone={wallet.phone}
+          country={wallet.country}
+          privateKey={wallet.privateKey}
+        />
+      ) : (
+        <PortfolioStack.Navigator headerMode="none">
+          <PortfolioStack.Screen name="AddWallet">
+            {(props) => <CreateWalletScreen {...props} uid={uid} />}
+          </PortfolioStack.Screen>
+          <PortfolioStack.Screen name="OneMoreStep">
+            {(props) => (
+              <OneMoreStepScreen
+                {...props}
+                uid={uid}
+                isWallet={handleAuthChange}
+              />
+            )}
+          </PortfolioStack.Screen>
+        </PortfolioStack.Navigator>
+      )}
+    </>
   );
 };
 
