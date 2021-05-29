@@ -15,7 +15,7 @@ const SettingCard = ({ icon, title, subtitle }) => {
           size={30}
         />
       </View>
-      <View>
+      <View style={styles.Content}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
       </View>
@@ -29,20 +29,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    marginBottom: 4,
+    marginBottom: 8,
+    marginHorizontal:8,
+    marginTop:8,
     flexDirection: "row",
-    padding: 20,
+    padding: 50,
     height: "10%",
+    alignContent:'center',
+    borderRadius:20,
+    
+      shadowColor:"#000",
+      shadowOffset:{
+          width:0,
+          height:4
+      },
+      shadowOpacity:0.30,
+      shadowRadius:4.8,
+
+      elevation: 8,
+  
+    
   },
   icon: {
     marginRight: 30,
     alignItems: "center",
     justifyContent: "center",
   },
+  Content: {
+    marginRight: 30,
+    justifyContent: "center",
+  },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   subtitle: {
     fontSize: 15,
