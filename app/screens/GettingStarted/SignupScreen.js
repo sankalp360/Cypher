@@ -3,18 +3,17 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Dimensions,
-  Image,
   TouchableOpacity,
   Platform,
   TextInput,
-  StatusBar,
+  ActivityIndicator,
 } from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable";
+
+import { COLORS } from "../../config/theme";
 
 import fireapp from "../../config/firebase";
 
@@ -88,12 +87,13 @@ const SignupScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#7F5DF0" barStyle="light-content" />
       <View style={styles.header}>
         <Text style={styles.text_header}>Register Now</Text>
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-        {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
+        {loader ? (
+          <ActivityIndicator size="large" color={COLORS.secondary} />
+        ) : null}
         <Text style={styles.text_footer}>Email</Text>
         <View style={styles.action}>
           <MaterialCommunityIcons name="email" color="#05375a" size={20} />
@@ -159,7 +159,7 @@ const SignupScreen = ({ navigation }) => {
             onPress={() => handleSignup()}
           >
             <LinearGradient
-              colors={["#7F5DF0", "#513C98"]}
+              colors={["#5D2DFD", "#21008F"]}
               style={styles.signIn}
             >
               <Text style={styles.textSign}>Sign Up</Text>
@@ -170,13 +170,13 @@ const SignupScreen = ({ navigation }) => {
             style={[
               styles.signIn,
               {
-                borderColor: "#513C98",
+                borderColor: "#21008F",
                 borderWidth: 1,
                 marginTop: 15,
               },
             ]}
           >
-            <Text style={[styles.textSign, { color: "#513C98" }]}>Login</Text>
+            <Text style={[styles.textSign, { color: "#21008F" }]}>Login</Text>
           </TouchableOpacity>
         </View>
       </Animatable.View>
@@ -191,7 +191,7 @@ export default SignupScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7F5DF0",
+    backgroundColor: COLORS.secondary,
   },
   header: {
     flex: 1,

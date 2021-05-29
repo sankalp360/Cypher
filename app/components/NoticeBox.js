@@ -8,7 +8,6 @@ const NoticeBox = () => {
     <View
       style={{
         marginTop: SIZES.padding,
-        marginHorizontal: SIZES.padding,
         padding: 10,
         borderRadius: SIZES.radius,
         backgroundColor: COLORS.secondary,

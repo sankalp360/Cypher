@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -25,6 +25,13 @@ const FromBankScreen = ({ navigation, uid }) => {
 
   const [loader, setLoader] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [isNameValid, setIsNameValid] = useState(true);
+  const [isPhoneValid, setIsPhoneValid] = useState(true);
+  const [isCountryValid, setIsCountryValid] = useState(true);
+  const [bank, setBank] = useState({
+    status: false,
+    text: "",
+  });
 
   const handleNameChange = (val) => {
     setWallet({
@@ -47,7 +54,80 @@ const FromBankScreen = ({ navigation, uid }) => {
     });
   };
 
+  const iChars = "!`@#$%^&*()+=-[]\\';,./{}|\":<>?~_";
+
+  useEffect(() => {
+    for (var i = 0; i < wallet.name.length; i++) {
+      if (
+        iChars.indexOf(wallet.name.charAt(i)) != -1 ||
+        isNaN(parseInt(wallet.name.charAt(i))) == false
+      ) {
+        setIsNameValid(false);
+      } else {
+        setIsNameValid(true);
+      }
+    }
+    for (var i = 0; i < wallet.phone.length; i++) {
+      if (
+        iChars.indexOf(wallet.phone.charAt(i)) != -1 ||
+        wallet.phone.length != 10
+      ) {
+        setIsPhoneValid(false);
+      } else {
+        setIsPhoneValid(true);
+      }
+    }
+    for (var i = 0; i < wallet.country.length; i++) {
+      if (
+        iChars.indexOf(wallet.country.charAt(i)) != -1 ||
+        isNaN(parseInt(wallet.country.charAt(i))) == false
+      ) {
+        setIsCountryValid(false);
+      } else {
+        setIsCountryValid(true);
+      }
+    }
+  }, [wallet]);
+
   const createWallet = () => {
+    if (!isNameValid || wallet.name == "") {
+      setBank({
+        status: true,
+        text: "Name Invalid",
+      });
+      setTimeout(() => {
+        setBank({
+          status: false,
+          text: "",
+        });
+      }, 1200);
+      return;
+    } else if (!isPhoneValid) {
+      setBank({
+        status: true,
+        text: "Phone Invalid",
+      });
+      setTimeout(() => {
+        setBank({
+          status: false,
+          text: "",
+        });
+      }, 1200);
+      return;
+    } else if (!isCountryValid || wallet.country == "") {
+      setBank({
+        status: true,
+        text: "Country Invalid",
+      });
+      setTimeout(() => {
+        setBank({
+          status: false,
+          text: "",
+        });
+      }, 1200);
+      return;
+    }
+
     setDisable(true);
     setLoader(true);
     db.collection("wallets")
@@ -80,6 +160,9 @@ const FromBankScreen = ({ navigation, uid }) => {
             <Text style={styles.footHeadText}>You Don't Have A Wallet !</Text>
             <Text style={styles.footHeadText2}>Create One </Text>
             {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
+            {bank.status ? (
+              <Text style={styles.rsuccessTxt}>{bank.text}</Text>
+            ) : null}
           </View>
           <View style={styles.action}>
             <TextInput

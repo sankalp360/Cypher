@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     marginBottom: 5,
-    marginRight: 90,
+    marginRight: 40,
     color: COLORS.secondary,
   },
   country: {

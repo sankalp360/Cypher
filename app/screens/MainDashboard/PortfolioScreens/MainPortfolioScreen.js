@@ -24,8 +24,6 @@ import { COLORS } from "../../../config/theme";
 //! Components
 import AssetCard from "../../../components/AssetCard";
 import GraphCard from "../../../components/GraphCard";
-import NewWallet from "../../../components/NewWallet";
-import CryptoRequest from "../../../components/CryptoRequest";
 import DeleteWallet from "../../../components/DeleteWallet";
 import PortfolioDetailsSection from "../../../components/PortfolioDetailsSection";
 

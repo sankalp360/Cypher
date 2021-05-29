@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
   Dimensions,
   Image,
   TouchableOpacity,
@@ -15,15 +14,17 @@ import { LinearGradient } from "expo-linear-gradient";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as Animatable from "react-native-animatable";
 
+import { COLORS } from "../../config/theme";
+
 const GettingStartedScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#7F5DF0" barStyle="light-content" />
+      <StatusBar backgroundColor={COLORS.secondary} barStyle="light-content" />
       <View style={styles.header}>
         <Animatable.Image
           animation="bounceIn"
           duration={1500}
-          source={require("../../assets/icons/logo.png")}
+          source={require("../../assets/icons/logoWhite.png")}
           style={styles.logo}
           resizeMode="stretch"
         />
@@ -34,7 +35,7 @@ const GettingStartedScreen = ({ navigation }) => {
         <View style={styles.button}>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <LinearGradient
-              colors={["#7F5DF0", "#513C98"]}
+              colors={["#5D2DFD", "#21008F"]}
               style={styles.signIn}
             >
               <Text style={styles.textSign}>Getting Started</Text>
@@ -49,12 +50,12 @@ const GettingStartedScreen = ({ navigation }) => {
 export default GettingStartedScreen;
 
 const { height } = Dimensions.get("screen");
-const height_logo = height * 0.4;
+const height_logo = height * 0.5;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#7F5DF0",
+    backgroundColor: COLORS.secondary,
   },
   header: {
     flex: 2,
@@ -74,12 +75,12 @@ const styles = StyleSheet.create({
     height: height_logo,
   },
   title: {
-    color: "#513C98",
+    color: COLORS.secondary,
     fontSize: 30,
     fontWeight: "bold",
   },
   text: {
-    color: "grey",
+    color: "black",
     marginTop: 10,
   },
   button: {

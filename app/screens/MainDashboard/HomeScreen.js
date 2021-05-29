@@ -11,7 +11,7 @@ import {
   StatusBar,
 } from "react-native";
 
-import { COLORS, FONTS, SIZES } from "../../config/theme";
+import { COLORS, FONTS } from "../../config/theme";
 import images from "../../config/images";
 import dummyData from "../../config/data";
 import icons from "../../config/icons";
@@ -108,7 +108,7 @@ const HomeScreen = () => {
       <View
         style={{
           width: "100%",
-          height: 260, //height of banner background
+          height: 300, //height of banner background
           ...styles.shadow,
         }}
       >
@@ -125,7 +125,7 @@ const HomeScreen = () => {
 
           <View
             style={{
-              marginTop: 10,
+              marginTop: 40,
               alignItems: "flex-end",
               justifyContent: "center",
               width: "100%",
@@ -150,11 +150,18 @@ const HomeScreen = () => {
 
           {/* current Balance data  start*/}
           <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ color: "white", ...FONTS.h3, fontWeight: "bold" }}>
+            <Text
+              style={{
+                color: "white",
+                ...FONTS.h2,
+                fontWeight: "bold",
+              }}
+            >
               Cypher Bank Balance
             </Text>
-            <Text style={{ marginTop: 8, color: "white", ...FONTS.h3 }}>
+            <Text style={{ marginTop: 10, color: "white", ...FONTS.h3 }}>
               {formatToCurrency(parseInt(bankWorth) / 10000000000000000000)}
+              {" CYP "}
             </Text>
             <Text style={{ color: COLORS.white, ...FONTS.body5 }}>
               {dummyData.portfolio.changes} Last 24 Hours
@@ -196,10 +203,10 @@ const HomeScreen = () => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        {renderheader()}
-        <PriceAlert />
+    <ScrollView style={styles.container}>
+      {renderheader()}
+      <PriceAlert />
+      <View style={{ paddingHorizontal: 20 }}>
         <NoticeBox />
       </View>
     </ScrollView>
@@ -212,7 +219,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0f0f0",
-    paddingBottom: 0,
   },
   shadow: {
     shadowColor: "#000",

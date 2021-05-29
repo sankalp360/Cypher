@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { View, StyleSheet, StatusBar } from "react-native";
+import { View, StyleSheet } from "react-native";
+
+import { StatusBar } from "expo-status-bar";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -27,7 +29,7 @@ function App() {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#5D2DFD" barStyle="light-content" />
+      <StatusBar backgroundColor="#5D2DFD" style="light" />
       <NavigationContainer>
         {user ? <RootTabScreen /> : <RootStackScreen />}
       </NavigationContainer>

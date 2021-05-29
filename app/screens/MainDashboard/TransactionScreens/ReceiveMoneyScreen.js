@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 
 import Clipboard from "expo-clipboard";
 
 import * as Animatable from "react-native-animatable";
 import { COLORS, SIZES, FONTS } from "../../../config/theme";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
+import NoticeBox from "../../../components/NoticeBox";
 
 const ReceiveMoneyScreen = ({ navigation, id }) => {
   // const [userId, setUserId] = useState(id);
@@ -22,46 +30,38 @@ const ReceiveMoneyScreen = ({ navigation, id }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backIcon}
-        >
-          <MaterialCommunityIcons
-            style={styles.backInner}
-            name="arrow-left"
-            color={COLORS.secondary}
-            size={30}
-          />
-        </TouchableOpacity>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backIcon}
+          >
+            <MaterialCommunityIcons
+              style={styles.backInner}
+              name="arrow-left"
+              color={COLORS.secondary}
+              size={30}
+            />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.text_header}>Receive Money</Text>
       </View>
 
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-        <View style={styles.footHead}>
-          <Text style={styles.footHeadText}>Maximum Transaction Amount:</Text>
-          <Text style={styles.footHeadText2}>200.00 CYP</Text>
-        </View>
-        <Text style={styles.footMethodText}>Your Account Hash Id</Text>
-        <Text style={styles.footMethodText2}>{id}</Text>
-        {clip ? (
-          <Text style={styles.rsuccessTxt}>Copied To Clipboard 📋</Text>
-        ) : null}
-        <TouchableOpacity onPress={copyToClipboard} style={styles.transact}>
-          <Text style={styles.transactText}>COPY</Text>
-        </TouchableOpacity>
-        <View style={styles.banner}>
-          <Text style={styles.bannerHead}>Investing Safety:</Text>
-          <Text style={styles.bannerText}>
-            It's very difficult to time Investment Espesially when market is
-            volatile.Learn how to use currency cost averaging to your advantage.
-          </Text>
-          <TouchableOpacity
-            style={styles.learnMore}
-            onPress={() => console.log("Learn More")}
-          >
-            <Text style={styles.learnMoreText}>Learn More</Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.footHead}>
+            <Text style={styles.footHeadText}>Maximum Transaction Amount:</Text>
+            <Text style={styles.footHeadText2}>200.00 CYP</Text>
+          </View>
+          <Text style={styles.footMethodText}>Your Account Hash Id</Text>
+          <Text style={styles.footMethodText2}>{id}</Text>
+          {clip ? (
+            <Text style={styles.rsuccessTxt}>Copied To Clipboard 📋</Text>
+          ) : null}
+          <TouchableOpacity onPress={copyToClipboard} style={styles.transact}>
+            <Text style={styles.transactText}>COPY</Text>
           </TouchableOpacity>
-        </View>
+          <NoticeBox style={{ marginHorizontal: -30 }} />
+        </ScrollView>
       </Animatable.View>
     </View>
   );
@@ -78,10 +78,31 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingBottom: 20,
+  },
+  iconContainer: {
+    height: 150,
+    backgroundColor: "#000",
+    backgroundColor: COLORS.secondary,
+  },
+  backIcon: {
+    position: "absolute",
+    top: 12,
+    left: 0,
+    backgroundColor: COLORS.white,
+    borderRadius: 50,
+    height: 50,
+    width: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text_header: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 30,
   },
   footer: {
-    flex: 3,
+    flex: 2,
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -102,23 +123,6 @@ const styles = StyleSheet.create({
     color: COLORS.secondary,
     fontWeight: "bold",
     fontSize: 25,
-  },
-  backIcon: {
-    position: "absolute",
-    top: 50,
-    left: 25,
-    backgroundColor: COLORS.white,
-    borderRadius: 50,
-    height: 50,
-    width: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  text_header: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 30,
-    marginBottom: -20,
   },
   text_footer: {
     marginTop: 8,
