@@ -269,7 +269,6 @@ function RootTabScreen() {
       />
       <Tab.Screen
         name="Setting"
-        component={SettingStackScreen}
         options={{
           tabBarLabel: "Settings",
           tabBarIcon: ({ focused }) => (
@@ -292,7 +291,15 @@ function RootTabScreen() {
             </TouchableOpacity>
           ),
         }}
-      />
+      >
+        {(props) => (
+          <SettingStackScreen
+            {...props}
+            name={wallet.name}
+            senderId={senderId}
+          />
+        )}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

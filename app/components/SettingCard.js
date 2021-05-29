@@ -12,7 +12,7 @@ const SettingCard = ({ icon, title, subtitle }) => {
         <MaterialCommunityIcons
           name={icon}
           color={COLORS.secondary}
-          size={30}
+          size={35}
         />
       </View>
       <View style={styles.Content}>
@@ -30,25 +30,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     marginBottom: 8,
-    marginHorizontal:8,
-    marginTop:8,
+    marginHorizontal: 8,
+    marginTop: 8,
     flexDirection: "row",
     padding: 50,
-    height: "10%",
-    alignContent:'center',
-    borderRadius:20,
-    
-      shadowColor:"#000",
-      shadowOffset:{
-          width:0,
-          height:4
-      },
-      shadowOpacity:0.30,
-      shadowRadius:4.8,
+    height: 50,
+    alignContent: "center",
+    borderRadius: 20,
 
-      elevation: 8,
-  
-    
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.8,
+
+    elevation: 6,
   },
   icon: {
     marginRight: 30,
