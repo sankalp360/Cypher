@@ -296,6 +296,7 @@ function RootTabScreen() {
           <SettingStackScreen
             {...props}
             name={wallet.name}
+            phone={wallet.phone}
             senderId={senderId}
           />
         )}

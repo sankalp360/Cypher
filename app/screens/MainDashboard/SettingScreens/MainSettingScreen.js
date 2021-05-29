@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, Linking } from "react-native";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -14,7 +14,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { COLORS, SIZES } from "../../../config/theme";
 import { ScrollView } from "react-native";
 
-const MainSettingScreen = ({ navigation, name, senderId }) => {
+const MainSettingScreen = ({ navigation, name, senderId, phone }) => {
   const signOut = () => {
     firebase
       .auth()
@@ -32,7 +32,11 @@ const MainSettingScreen = ({ navigation, name, senderId }) => {
       {/* header  Section*/}
       <View style={styles.header}>
         <Text style={styles.text_header}>{name}</Text>
-        <Text style={styles.settingSubHeading}>{senderId}</Text>
+        <Text style={styles.settingSubHeading2}>
+          {"+91 "}
+          {phone}
+        </Text>
+        {/* <Text style={styles.settingSubHeading}>{senderId}</Text> */}
       </View>
 
       {/* header  Section*/}
@@ -87,7 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     marginTop: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
@@ -98,7 +102,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   settingSubHeading: {
-    fontSize: 12,
+    fontSize: 13,
+    color: COLORS.white,
+    marginTop: 15,
+  },
+  settingSubHeading2: {
+    fontSize: 18,
     color: COLORS.white,
     marginTop: 10,
   },

@@ -6,12 +6,17 @@ import AboutCypher from "./SettingScreens/AboutCypher";
 
 const SettingStack = createStackNavigator();
 
-const SettingStackScreen = ({ navigation, name, senderId }) => {
+const SettingStackScreen = ({ navigation, name, senderId, phone }) => {
   return (
     <SettingStack.Navigator headerMode="none">
       <SettingStack.Screen name="Main">
         {(props) => (
-          <MainSettingScreen {...props} name={name} senderId={senderId} />
+          <MainSettingScreen
+            {...props}
+            name={name}
+            phone={phone}
+            senderId={senderId}
+          />
         )}
       </SettingStack.Screen>
 
