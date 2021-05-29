@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
-  StatusBar,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 
 import axios from "axios";
@@ -27,11 +27,52 @@ const FromBankScreen = ({ navigation, id, base }) => {
   const handleMoneyChange = (val) => {
     setMoney(val);
     console.log(val);
-    console.log(id);
-    console.log(base);
   };
 
   function handleRequestFromBank() {
+    const intMoney = parseInt(money);
+
+    if (money == "") {
+      setBank({
+        status: true,
+        text: "Field required",
+      });
+      setTimeout(() => {
+        setBank({
+          status: false,
+          text: "",
+        });
+      }, 1200);
+      return;
+    } else if (isNaN(intMoney)) {
+      setBank({
+        status: true,
+        text: "Invalid Amount",
+      });
+      setMoney("");
+      setTimeout(() => {
+        setBank({
+          status: false,
+          text: "",
+        });
+      }, 1200);
+      return;
+    } else if (intMoney > 200) {
+      setBank({
+        status: true,
+        text: "Maximum Transaction Limit Exceeded",
+      });
+      setTimeout(() => {
+        setBank({
+          status: false,
+          text: "",
+        });
+      }, 1200);
+      return;
+    }
+
+    console.log(intMoney);
+
     setDisable(true);
     setLoader(true);
     setMoney("");
@@ -80,70 +121,84 @@ const FromBankScreen = ({ navigation, id, base }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor={COLORS.secondary} barStyle="light-content" />
       <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("SendMoney")}
-          style={styles.sendIcon}
-        >
-          <MaterialCommunityIcons
-            style={styles.sendInner}
-            name="send"
-            color={COLORS.secondary}
-            size={30}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("ReceiveMoney")}
-          style={styles.receiveIcon}
-        >
-          <MaterialCommunityIcons
-            style={styles.receiveInner}
-            name="call-received"
-            color={COLORS.secondary}
-            size={30}
-          />
-        </TouchableOpacity>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backIcon}
+          >
+            <MaterialCommunityIcons
+              style={styles.backInner}
+              name="arrow-left"
+              color={COLORS.secondary}
+              size={30}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SendMoney")}
+            style={styles.sendIcon}
+          >
+            <MaterialCommunityIcons
+              style={styles.sendInner}
+              name="send"
+              color={COLORS.secondary}
+              size={30}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ReceiveMoney")}
+            style={styles.receiveIcon}
+          >
+            <MaterialCommunityIcons
+              style={styles.receiveInner}
+              name="call-received"
+              color={COLORS.secondary}
+              size={30}
+            />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.text_header}>Add Money To Wallet</Text>
       </View>
 
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-        <View style={styles.footHead}>
-          <Text style={styles.footHeadText}>Minimum Transaction Amount:</Text>
-          <Text style={styles.footHeadText2}>1.000 CYP</Text>
-        </View>
-        {bank.status ? (
-          <Text style={styles.rsuccessTxt}>{bank.text}</Text>
-        ) : null}
-        <View style={styles.action}>
-          <Text style={styles.actionText}>CYP</Text>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.footHead}>
+            <Text style={styles.footHeadText}>Maximum Transaction Amount:</Text>
+            <Text style={styles.footHeadText2}>200.00 CYP</Text>
+          </View>
+          {bank.status ? (
+            <Text style={styles.rsuccessTxt}>{bank.text}</Text>
+          ) : null}
+          <View style={styles.action}>
+            <Text style={styles.actionText}>CYP</Text>
 
-          <TextInput
-            onChangeText={(val) => handleMoneyChange(val)}
-            placeholder="Amount"
-            style={styles.textInput}
-            keyboardType="numeric"
-            value={money}
-          ></TextInput>
-        </View>
-        <TouchableOpacity
-          onPress={handleRequestFromBank}
-          disabled={disable}
-          style={styles.transact}
-        >
-          <Text style={styles.transactText}>REQUEST</Text>
-        </TouchableOpacity>
-        {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
-        <Text style={styles.footMethodText}>Or Exchange Via</Text>
-        <TouchableOpacity style={styles.method}>
-          <Text style={styles.methodText}>PAYTM</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.method}>
-          <Text style={styles.methodText}>UPI</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.method}>
-          <Text style={styles.methodText}>DEBIT CARD</Text>
-        </TouchableOpacity>
+            <TextInput
+              onChangeText={(val) => handleMoneyChange(val)}
+              placeholder="Amount"
+              style={styles.textInput}
+              keyboardType="numeric"
+              value={money}
+            ></TextInput>
+          </View>
+          <TouchableOpacity
+            onPress={handleRequestFromBank}
+            disabled={disable}
+            style={styles.transact}
+          >
+            <Text style={styles.transactText}>REQUEST</Text>
+          </TouchableOpacity>
+          {loader ? <ActivityIndicator size="large" color="#7F5DF0" /> : null}
+          <Text style={styles.footMethodText}>Or Exchange Via</Text>
+          <TouchableOpacity style={styles.method}>
+            <Text style={styles.methodText}>PAYTM</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.method}>
+            <Text style={styles.methodText}>UPI</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.method}>
+            <Text style={styles.methodText}>DEBIT CARD</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </Animatable.View>
     </View>
   );
@@ -156,10 +211,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.secondary,
   },
+  iconContainer: {
+    height: 150,
+    backgroundColor: "#000",
+    backgroundColor: COLORS.secondary,
+  },
+  backIcon: {
+    position: "absolute",
+    top: 12,
+    left: 0,
+    backgroundColor: COLORS.white,
+    borderRadius: 50,
+    height: 50,
+    width: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   sendIcon: {
     position: "absolute",
-    top: 50,
-    right: 25,
+    top: 12,
+    right: 0,
     backgroundColor: COLORS.white,
     borderRadius: 50,
     height: 50,
@@ -169,8 +240,8 @@ const styles = StyleSheet.create({
   },
   receiveIcon: {
     position: "absolute",
-    top: 50,
-    right: 90,
+    top: 12,
+    right: 70,
     backgroundColor: COLORS.white,
     borderRadius: 50,
     height: 50,
@@ -187,16 +258,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     paddingHorizontal: 20,
-    paddingBottom: 50,
   },
   footer: {
-    flex: 3,
+    flex: 2,
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingHorizontal: 20,
-    paddingVertical: 30,
-    marginHorizontal: 10,
+    paddingTop: 30,
+    paddingBottom: 10,
+    marginHorizontal: 2,
   },
   footHead: {
     marginVertical: 12,
@@ -216,7 +287,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     fontSize: 27,
-    marginBottom: -20,
+    marginBottom: 10,
   },
   text_footer: {
     marginTop: 8,

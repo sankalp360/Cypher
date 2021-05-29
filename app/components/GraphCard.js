@@ -23,8 +23,8 @@ const GraphCard = () => {
         yAxisInterval={1} // optional, defaults to 1
         chartConfig={{
           backgroundColor: "#7F5DF0",
-          backgroundGradientFrom: "#7F5DF0",
-          backgroundGradientTo: "#513C98",
+          backgroundGradientFrom: "#5D2DFD",
+          backgroundGradientTo: "#21008F",
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -57,5 +57,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 6,
+    marginHorizontal: 25,
   },
 });

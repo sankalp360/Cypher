@@ -24,7 +24,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/icons/logo.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.teamcypher.cypher"
     },
     "web": {
       "favicon": "./app/assets/icons/logo.png"

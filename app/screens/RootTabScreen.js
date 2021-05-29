@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Image, Text, StyleSheet, LogBox } from "react-native";
 import * as Animatable from "react-native-animatable";
 // import LinearGradient from 'react-native-linear-gradient';
 
@@ -17,19 +17,136 @@ import icons from "../config/icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import MarketScreenOld from "./MainDashboard/MarketScreenOld";
+
+import { db, fireauth } from "../config/firebase";
+
+const BaseURL = "https://cypher-advanced-wallet.herokuapp.com";
+
+LogBox.ignoreLogs(["Setting a timer"]);
 
 const Tab = createBottomTabNavigator();
 
 function RootTabScreen() {
+  const [wallet, setWallet] = useState({
+    name: "",
+    phone: "",
+    country: "",
+    walletId: "",
+    privateKey: "",
+  });
+  const [isWallet, setIsWallet] = useState(false); //*
+  const [senderId, setSenderId] = useState("");
+  const [uid, setUid] = useState("ini"); //*
+  const [zoom, setZoom] = useState({
+    zoomOut: {
+      0: {
+        opacity: 1,
+        scale: 1,
+      },
+      1: {
+        opacity: 1,
+        scale: 1,
+      },
+    },
+  });
+
+  useEffect(() => {}, [zoom]);
+
+  fireauth.onAuthStateChanged((user) => {
+    if (user) {
+      console.log("available");
+      setUid(user.uid);
+    }
+  });
+
+  useEffect(() => {
+    let docRef = db.collection("wallets").doc(uid); //* Setting Reference variable for the Firestore wallet document associated with the User account.
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setSenderId(doc.data().walletId); //* fetching the remote User Wallet data and setting it into the Local State.
+          console.log(doc.data().walletId);
+        } else {
+          console.log("No such document!"); //* doc.data() will be undefined in this case
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
+  }, [uid]);
+
+  useEffect(() => {
+    let docRef = db.collection("wallets").doc(uid); //* Setting Reference variable for the Firestore wallet document associated with the User account.
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setIsWallet(true); //* If Doc Exists Display Portfolio Screen with User Data
+          setWallet({
+            name: doc.data().name,
+            phone: doc.data().phone,
+            country: doc.data().country,
+            walletId: doc.data().walletId,
+            privateKey: doc.data().privateKey,
+          }); //* fetching the remote User Wallet data and setting it into the Local State.
+        } else {
+          console.log("No such document!"); //* doc.data() will be undefined in this case
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
+  }, [uid, isWallet]); //* Runs always on these state changes.
+
+  function handleAuthChange(childData) {
+    setIsWallet(true);
+  }
+
+  function handleZoomOut() {
+    setZoom({
+      zoomOut: {
+        0: {
+          opacity: 1,
+          scale: 1,
+        },
+        0.5: {
+          opacity: 1,
+          scale: 0.6,
+        },
+        1: {
+          opacity: 1,
+          scale: 1,
+        },
+      },
+    });
+    setTimeout(() => {
+      setZoom({
+        zoomOut: {
+          0: {
+            opacity: 1,
+            scale: 1,
+          },
+          1: {
+            opacity: 1,
+            scale: 1,
+          },
+        },
+      });
+    }, 300);
+  }
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
         showLabel: false,
+        keyboardHidesTabBar: true,
         style: {
           backgroundColor: COLORS.white,
-          height: 70,
-          borderTopColor: "transparent",
+          height: 50,
+          borderTopColor: "grey",
         },
       }}
     >
@@ -43,7 +160,7 @@ function RootTabScreen() {
               <MaterialCommunityIcons
                 name="home"
                 color={focused ? COLORS.secondary : COLORS.black}
-                size={30}
+                size={20}
               />
 
               <Text
@@ -52,7 +169,7 @@ function RootTabScreen() {
                   ...FONTS.body5,
                 }}
               >
-                HOME
+                Home
               </Text>
             </View>
           ),
@@ -60,15 +177,14 @@ function RootTabScreen() {
       />
       <Tab.Screen
         name="Portfolio"
-        component={PortfolioStackScreen}
         options={{
           tabBarLabel: "Portfolio",
           tabBarIcon: ({ focused }) => (
-            <View style={styles.IconView}>
+            <Animatable.View style={styles.IconView}>
               <MaterialCommunityIcons
                 name="account"
                 color={focused ? COLORS.secondary : COLORS.black}
-                size={30}
+                size={20}
               />
 
               <Text
@@ -77,28 +193,56 @@ function RootTabScreen() {
                   ...FONTS.body5,
                 }}
               >
-                PortFolio
+                Portfolio
               </Text>
-            </View>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Transaction"
-        component={TransactionStackScreen}
-        options={{
-          tabBarLabel: "Transaction",
-          tabBarIcon: ({ focused }) => (
-            <Animatable.View style={styles.transactionBtn}>
-              <MaterialCommunityIcons
-                name="repeat"
-                color={focused ? COLORS.white : COLORS.white}
-                size={30}
-              />
             </Animatable.View>
           ),
         }}
-      />
+      >
+        {(props) => (
+          <PortfolioStackScreen
+            {...props}
+            uid={uid}
+            BaseURL={BaseURL}
+            walletId={wallet.walletId}
+            name={wallet.name}
+            phone={wallet.phone}
+            country={wallet.country}
+            privateKey={wallet.privateKey}
+            isWallet={isWallet}
+            isThisWallet={handleAuthChange}
+          />
+        )}
+      </Tab.Screen>
+      <Tab.Screen
+        name="Transaction"
+        options={{
+          tabBarLabel: "Transaction",
+          tabBarIcon: ({ focused }) => (
+            <TouchableOpacity activeOpacity={1} onPress={handleZoomOut}>
+              <Animatable.View
+                animation={zoom.zoomOut}
+                style={styles.transactionBtn}
+                duration={200}
+              >
+                <MaterialCommunityIcons
+                  name="repeat"
+                  color={focused ? COLORS.white : COLORS.white}
+                  size={20}
+                />
+              </Animatable.View>
+            </TouchableOpacity>
+          ),
+        }}
+      >
+        {(props) => (
+          <TransactionStackScreen
+            {...props}
+            BaseURL={BaseURL}
+            senderId={senderId}
+          />
+        )}
+      </Tab.Screen>
       <Tab.Screen
         name="Market"
         component={MarketScreen}
@@ -109,7 +253,7 @@ function RootTabScreen() {
               <MaterialCommunityIcons
                 name="arrow-top-right"
                 color={focused ? COLORS.secondary : COLORS.black}
-                size={30}
+                size={20}
               />
               <Text
                 style={{
@@ -134,7 +278,7 @@ function RootTabScreen() {
                 <MaterialCommunityIcons
                   name="cog"
                   color={focused ? COLORS.secondary : COLORS.black}
-                  size={30}
+                  size={20}
                 />
                 <Text
                   style={{
@@ -169,8 +313,8 @@ const styles = StyleSheet.create({
   transactionBtn: {
     alignItems: "center",
     justifyContent: "center",
-    height: 60,
-    width: 60,
+    height: 45,
+    width: 45,
     backgroundColor: COLORS.secondary,
     borderRadius: 50,
   },

@@ -1,17 +1,36 @@
 import React, { useState, useEffect } from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  StyleSheet,
+  StatusBar,
+  ActivityIndicator,
+  ScrollView,
+} from "react-native";
 
 import axios from "axios";
 
-import { StyleSheet, Text, View, TextInput, ScrollView } from "react-native";
+import { db, fireauth } from "../../config/firebase";
+
+import * as Animatable from "react-native-animatable";
+import { COLORS, SIZES } from "../../config/theme";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Coin from "../../components/Coin";
+import CypherCoin from "../../components/CypherCoin";
+import SearchBox from "../../components/SearchBox";
+import LoadingScreen from "../LoadingScreen";
 
-import LoadingScreen from "../../screens/LoadingScreen";
-
-function MarketScreen() {
+const MarketScreen = ({ navigation, uid }) => {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loader, setLoader] = useState(false);
+
+  function monitorSearch(childData) {
+    setSearch(childData);
+  }
 
   useEffect(() => {
     axios
@@ -26,11 +45,6 @@ function MarketScreen() {
       .catch((error) => console.log(error));
   }, []);
 
-  const handleChange = (val) => {
-    setSearch(val);
-    //* console.log(filteredCoins);  -> Debugging filteredCoins coming after search
-  };
-
   const filteredCoins = coins.filter((coin) => {
     return coin.name.toLowerCase().match(search.toLowerCase());
   });
@@ -40,33 +54,38 @@ function MarketScreen() {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <ScrollView data={coins} style={styles.container}>
-          <Text style={styles.marketHeading}>Market</Text>
-          <View style={styles.coinSearch}>
-            <TextInput
-              style={styles.textIn}
-              onChangeText={(val) => handleChange(val)}
-              placeholder="Search For A Currency.."
-            />
-            <MaterialCommunityIcons name="magnify" color="#444" size={27} />
+        <View style={styles.container}>
+          <StatusBar
+            backgroundColor={COLORS.secondary}
+            barStyle="light-content"
+          />
+          <View style={styles.header}>
+            <Text style={styles.text_header}>Market</Text>
           </View>
-          {filteredCoins.map((coin) => {
-            return (
-              <Coin
-                key={coin.id}
-                name={coin.name}
-                image={coin.image}
-                symbol={coin.symbol}
-                price={coin.current_price}
-                priceChange={coin.price_change_percentage_24h}
-              />
-            );
-          })}
-        </ScrollView>
+
+          <SearchBox fetchSearch={monitorSearch} />
+          <Animatable.View animation="bounceIn" style={styles.footer}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <CypherCoin />
+              {filteredCoins.map((coin) => {
+                return (
+                  <Coin
+                    key={coin.id}
+                    name={coin.name}
+                    image={coin.image}
+                    symbol={coin.symbol}
+                    price={coin.current_price}
+                    priceChange={coin.price_change_percentage_24h}
+                  />
+                );
+              })}
+            </ScrollView>
+          </Animatable.View>
+        </View>
       )}
     </View>
   );
-}
+};
 
 export default MarketScreen;
 
@@ -75,34 +94,70 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    backgroundColor: "#f0f0f0",
-    padding: 20,
+    flex: 1,
+    backgroundColor: COLORS.secondary,
   },
-  marketHeading: {
-    marginTop: 20,
-    fontSize: 26,
+  header: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  text_header: {
+    color: "#fff",
     fontWeight: "bold",
+    fontSize: 27,
+    marginBottom: -27,
+  },
+  footer: {
+    width: "100%",
+    flex: 10,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingTop: 5,
+  },
+  footHead: {
+    marginVertical: 5,
+  },
+  footHeadText: {
+    textAlign: "center",
+    color: "black",
+    fontWeight: "bold",
+  },
+  footHeadText2: {
+    textAlign: "center",
+    color: COLORS.black,
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+  text_footer: {
+    marginTop: 8,
+    color: "#05375a",
+    fontSize: 18,
   },
   coinSearch: {
     flex: 1,
     width: "100%",
-    height: 70,
+    height: 60,
+    backgroundColor: COLORS.secondary,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    marginVertical: 10,
+    borderRadius: 10,
   },
   coinText: {
     padding: 10,
     justifyContent: "center",
   },
   textIn: {
-    height: 30,
-    width: "90%",
-    borderColor: "grey",
-    borderWidth: 1,
-    backgroundColor: "#dcdcdc",
+    height: 40,
+    width: "83%",
+    borderBottomColor: COLORS.white,
+    borderBottomWidth: 1,
     borderRadius: 10,
-    color: "black",
+    color: COLORS.white,
     marginRight: 5,
     paddingHorizontal: 10,
   },
