@@ -20,9 +20,8 @@ import PriceAlert from "../../components/PriceAlert";
 import NoticeBox from "../../components/NoticeBox";
 import axios from "axios";
 
+const BaseURL = "https://cypher-advanced-wallet.herokuapp.com";
 const HomeScreen = () => {
-  BaseURL = "https://cypher-advanced-wallet.herokuapp.com";
-
   const [bankWorth, setBankWorth] = useState("100000000000000000000000000");
 
   useEffect(() => {
