@@ -140,6 +140,7 @@ function RootTabScreen() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
       tabBarOptions={{
         showLabel: false,
         keyboardHidesTabBar: true,
@@ -215,6 +216,7 @@ function RootTabScreen() {
         )}
       </Tab.Screen>
       <Tab.Screen
+      screenOptions={{ headerShown: false }}
         name="Transaction"
         options={{
           tabBarLabel: "Transaction",

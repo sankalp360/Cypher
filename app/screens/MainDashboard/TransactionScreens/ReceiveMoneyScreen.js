@@ -16,7 +16,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import NoticeBox from "../../../components/NoticeBox";
 
 const ReceiveMoneyScreen = ({ navigation, id }) => {
-  // const [userId, setUserId] = useState(id);
   const [clip, setClip] = useState(false);
 
   function copyToClipboard() {

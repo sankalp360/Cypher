@@ -82,7 +82,10 @@ const SignupScreen = ({ navigation }) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => navigation.navigate("Dashboard"))
-      .catch((error) => setData({ ...data, isValidEmail: false }));
+      .catch((error) => {
+        setLoader(false)
+        setData({ ...data, isValidEmail: false })
+        });
   };
 
   return (
@@ -155,26 +158,19 @@ const SignupScreen = ({ navigation }) => {
         </View>
         <View style={styles.button}>
           <TouchableOpacity
-            style={styles.signIn}
+            style={styles.signUpWrapper}
             onPress={() => handleSignup()}
           >
             <LinearGradient
               colors={["#5D2DFD", "#21008F"]}
-              style={styles.signIn}
+              style={styles.signUp}
             >
               <Text style={styles.textSign}>Sign Up</Text>
             </LinearGradient>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={[
-              styles.signIn,
-              {
-                borderColor: "#21008F",
-                borderWidth: 1,
-                marginTop: 15,
-              },
-            ]}
+            style={styles.signIn}
           >
             <Text style={[styles.textSign, { color: "#21008F" }]}>Login</Text>
           </TouchableOpacity>
@@ -233,12 +229,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 50,
   },
+  signUpWrapper: {
+    width: '100%'
+  },
+  signUp: {
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
   signIn: {
     width: "100%",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
+    borderColor: "#21008F",
+    borderWidth: 1,
+    marginTop: 15,
   },
   textSign: {
     fontSize: 18,

@@ -9,11 +9,8 @@ import ReceiveMoneyScreen from "./TransactionScreens/ReceiveMoneyScreen";
 const TransactionStack = createStackNavigator();
 
 const TransactionStackScreen = ({ navigation, BaseURL, senderId }) => {
-  // useEffect(() => {
-  //   navigation.setOptions({ tabBarVisible: false });
-  // }, []);
   return (
-    <TransactionStack.Navigator headerMode="none">
+    <TransactionStack.Navigator screenOptions={{headerShown: false}}>
       <TransactionStack.Screen name="FromBank">
         {(props) => <FromBankScreen {...props} base={BaseURL} id={senderId} />}
       </TransactionStack.Screen>

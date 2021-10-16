@@ -8,7 +8,7 @@ const SettingStack = createStackNavigator();
 
 const SettingStackScreen = ({ navigation, name, senderId, phone }) => {
   return (
-    <SettingStack.Navigator headerMode="none">
+    <SettingStack.Navigator screenOptions={{headerShown: false}}>
       <SettingStack.Screen name="Main">
         {(props) => (
           <MainSettingScreen

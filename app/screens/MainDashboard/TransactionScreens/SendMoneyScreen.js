@@ -27,12 +27,10 @@ const SendMoneyScreen = ({ navigation, id, base }) => {
 
   const handleMoneyChange = (val) => {
     setMoney(val);
-    console.log(val);
   };
 
   const handleReceiverIdChange = (val) => {
     setReceiverId(val);
-    console.log(val);
   };
 
   const setQuickAmount = (val) => {

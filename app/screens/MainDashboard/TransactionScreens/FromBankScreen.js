@@ -26,7 +26,6 @@ const FromBankScreen = ({ navigation, id, base }) => {
 
   const handleMoneyChange = (val) => {
     setMoney(val);
-    console.log(val);
   };
 
   function handleRequestFromBank() {
@@ -70,8 +69,6 @@ const FromBankScreen = ({ navigation, id, base }) => {
       }, 1200);
       return;
     }
-
-    console.log(intMoney);
 
     setDisable(true);
     setLoader(true);

@@ -52,7 +52,7 @@ const PortfolioStackScreen = ({
             privateKey={privateKey}
           />
         ) : (
-          <PortfolioStack.Navigator headerMode="none">
+          <PortfolioStack.Navigator screenOptions={{headerShown: false}}>
             <PortfolioStack.Screen name="AddWallet">
               {(props) => <CreateWalletScreen {...props} uid={uid} />}
             </PortfolioStack.Screen>

@@ -10,7 +10,7 @@ import RootTabScreen from "./RootTabScreen";
 const RootStack = createStackNavigator();
 
 const RootStackScreen = ({ navigation }) => (
-  <RootStack.Navigator headerMode="none">
+  <RootStack.Navigator screenOptions={{headerShown: false}}>
     <RootStack.Screen name="GettingStarted" component={GettingStartedScreen} />
     <RootStack.Screen name="Signup" component={SignupScreen} />
     <RootStack.Screen name="Login" component={LoginScreen} />
