@@ -40,7 +40,7 @@ export default Coin;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
     height: "100%",
     alignItems: "center",
     marginBottom: 16,

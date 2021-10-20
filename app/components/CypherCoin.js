@@ -30,7 +30,7 @@ export default CypherCoin;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
     height: "100%",
     alignItems: "center",
     marginTop: 5,

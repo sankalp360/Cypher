@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   footer: {
     width: "100%",
     flex: 10,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.AliceBlue,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingTop: 5,

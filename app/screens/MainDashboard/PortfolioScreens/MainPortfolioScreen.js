@@ -114,13 +114,13 @@ const styles = StyleSheet.create({
   },
   portfolioSubHeading: {
     fontSize: 16,
-    color: COLORS.white,
+    color: COLORS.AliceBlue,
     marginTop: 20,
     marginBottom: -5,
   },
   footer: {
     flex: 6,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.AliceBlue,
     paddingTop: 15,
   },
   assets: {

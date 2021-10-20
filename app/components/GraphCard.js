@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
-
+import { COLORS, SIZES } from "../config/theme";
 import { LinearGradient } from "expo-linear-gradient";
 import { LineChart } from "react-native-chart-kit";
 
 const GraphCard = () => {
   return (
-    <LinearGradient colors={["#FFF", "#FFF"]} style={styles.portfolioHero}>
+    <LinearGradient colors={[COLORS.white, COLORS.primary]} style={styles.portfolioHero}>
       <LineChart
         data={{
           labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
@@ -23,8 +23,8 @@ const GraphCard = () => {
         yAxisInterval={1} // optional, defaults to 1
         chartConfig={{
           backgroundColor: "#7F5DF0",
-          backgroundGradientFrom: "#5D2DFD",
-          backgroundGradientTo: "#21008F",
+          backgroundGradientFrom: COLORS.secondary,
+          backgroundGradientTo: "#042743",
           decimalPlaces: 2, // optional, defaults to 2dp
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,

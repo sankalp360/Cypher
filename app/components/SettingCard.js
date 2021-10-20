@@ -28,7 +28,7 @@ export default SettingCard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
     marginBottom: 8,
     marginHorizontal: 8,
     marginTop: 8,
